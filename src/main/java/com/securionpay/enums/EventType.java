@@ -1,0 +1,62 @@
+package com.securionpay.enums;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+public enum EventType {
+
+	CHARGE_SUCCEEDED("CHARGE_SUCCEEDED"),
+	CHARGE_FAILED("CHARGE_FAILED"),
+	CHARGE_UPDATED("CHARGE_UPDATED"),
+	CHARGE_CAPTURED("CHARGE_CAPTURED"),
+	CHARGE_REFUNDED("CHARGE_REFUNDED"),
+
+	CHARGE_DISPUTE_CREATED("CHARGE_DISPUTE_CREATED"),
+	CHARGE_DISPUTE_UPDATED("CHARGE_DISPUTE_UPDATED"),
+	CHARGE_DISPUTE_WON("CHARGE_DISPUTE_WON"),
+	CHARGE_DISPUTE_LOST("CHARGE_DISPUTE_LOST"),
+
+	CHARGE_DISPUTE_FUNDS_WITHDRAWN("CHARGE_DISPUTE_FUNDS_WITHDRAWN"),
+	CHARGE_DISPUTE_FUNDS_RESTORED("CHARGE_DISPUTE_FUNDS_RESTORED"),
+
+	CUSTOMER_CARD_CREATED("CUSTOMER_CARD_CREATED"),
+	CUSTOMER_CARD_UPDATED("CUSTOMER_CARD_UPDATED"),
+	CUSTOMER_CARD_DELETED("CUSTOMER_CARD_DELETED"),
+	CUSTOMER_CREATED("CUSTOMER_CREATED"),
+	CUSTOMER_UPDATED("CUSTOMER_UPDATED"),
+	CUSTOMER_DELETED("CUSTOMER_DELETED"),
+	CUSTOMER_SUBSCRIPTION_CREATED("CUSTOMER_SUBSCRIPTION_CREATED"),
+	CUSTOMER_SUBSCRIPTION_UPDATED("CUSTOMER_SUBSCRIPTION_UPDATED"),
+	CUSTOMER_SUBSCRIPTION_DELETED("CUSTOMER_SUBSCRIPTION_DELETED"),
+
+	PLAN_CREATED("PLAN_CREATED"),
+	PLAN_UPDATED("PLAN_UPDATED"),
+	PLAN_DELETED("PLAN_DELETED"),
+	
+	/**
+	 * Used when received value can't be mapped to this enumeration.
+	 */
+	UNRECOGNIZED("unrecognized");
+
+	private final String value;
+
+	private EventType(String value) {
+		this.value = value;
+	}
+
+	@JsonCreator
+	public static EventType fromValue(String value) {
+		for (EventType errorType : values()) {
+			if (errorType.value.equalsIgnoreCase(value)) {
+				return errorType;
+			}
+		}
+
+		return UNRECOGNIZED;
+	}
+
+	@JsonValue
+	public String getValue() {
+		return value;
+	}
+}
