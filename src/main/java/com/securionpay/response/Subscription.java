@@ -18,6 +18,7 @@ public class Subscription {
 	private String planId;
 	private String customerId;
 	private Integer quantity;
+	private Boolean captureCharges;
 	private SubscriptionStatus status;
 	private Integer remainingBillingCycles;
 	private Long start;
@@ -55,6 +56,10 @@ public class Subscription {
 
 	public Integer getQuantity() {
 		return quantity;
+	}
+
+	public Boolean getCaptureCharges() {
+		return captureCharges;
 	}
 
 	public SubscriptionStatus getStatus() {

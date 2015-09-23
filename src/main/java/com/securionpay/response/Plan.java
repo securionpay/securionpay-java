@@ -2,12 +2,12 @@ package com.securionpay.response;
 
 import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.securionpay.enums.Interval;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Plan {
 

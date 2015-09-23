@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.securionpay.response.BlacklistRule;
+import com.securionpay.response.CrossSaleOffer;
 
 @JsonInclude(Include.NON_NULL)
-public class BlacklistRuleListRequest {
+public class CrossSaleOfferListRequest {
 
 	private Integer limit;
 	private String startingAfterId;
@@ -20,6 +20,8 @@ public class BlacklistRuleListRequest {
 
 	private CreatedFilter created;
 	private Boolean deleted;
+
+	private String partnerId;
 
 	@JsonIgnore
 	private Map<String, Object> other = new HashMap<String, Object>();
@@ -48,45 +50,54 @@ public class BlacklistRuleListRequest {
 		return deleted;
 	}
 
-	public BlacklistRuleListRequest limit(Integer limit) {
+	public String getPartnerId() {
+		return partnerId;
+	}
+
+	public CrossSaleOfferListRequest limit(Integer limit) {
 		this.limit = limit;
 		return this;
 	}
 
-	public BlacklistRuleListRequest startingAfterId(String startingAfterId) {
+	public CrossSaleOfferListRequest startingAfterId(String startingAfterId) {
 		this.startingAfterId = startingAfterId;
 		return this;
 	}
 
-	public BlacklistRuleListRequest startingAfter(BlacklistRule blacklistRule) {
-		return startingAfterId(blacklistRule.getId());
+	public CrossSaleOfferListRequest startingAfter(CrossSaleOffer crossSaleOffer) {
+		return startingAfterId(crossSaleOffer.getId());
 	}
 
-	public BlacklistRuleListRequest endingBeforeId(String endingBeforeId) {
+	public CrossSaleOfferListRequest endingBeforeId(String endingBeforeId) {
 		this.endingBeforeId = endingBeforeId;
 		return this;
 	}
 
-	public BlacklistRuleListRequest endingBefore(BlacklistRule blacklistRule) {
-		return endingBeforeId(blacklistRule.getId());
+	public CrossSaleOfferListRequest endingBefore(CrossSaleOffer crossSaleOffer) {
+		return endingBeforeId(crossSaleOffer.getId());
 	}
 
-	public BlacklistRuleListRequest includeTotalCount(Boolean includeTotalCount) {
+	public CrossSaleOfferListRequest includeTotalCount(Boolean includeTotalCount) {
 		this.includeTotalCount = includeTotalCount;
 		return this;
 	}
 
-	public BlacklistRuleListRequest includeTotalCount() {
+	public CrossSaleOfferListRequest includeTotalCount() {
 		return includeTotalCount(true);
 	}
 
-	public BlacklistRuleListRequest created(CreatedFilter created) {
+	public CrossSaleOfferListRequest created(CreatedFilter created) {
 		this.created = created;
 		return this;
 	}
 
-	public BlacklistRuleListRequest deleted(Boolean deleted) {
+	public CrossSaleOfferListRequest deleted(Boolean deleted) {
 		this.deleted = deleted;
+		return this;
+	}
+
+	public CrossSaleOfferListRequest partnerId(String partnerId) {
+		this.partnerId = partnerId;
 		return this;
 	}
 
@@ -96,7 +107,7 @@ public class BlacklistRuleListRequest {
 	}
 
 	@JsonAnySetter
-	public BlacklistRuleListRequest set(String name, Object value) {
+	public CrossSaleOfferListRequest set(String name, Object value) {
 		other.put(name, value);
 		return this;
 	}

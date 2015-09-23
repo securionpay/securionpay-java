@@ -1,50 +1,24 @@
 package com.securionpay;
 
 import static java.lang.String.format;
+import static org.apache.commons.codec.binary.Base64.encodeBase64String;
+import static org.apache.commons.codec.binary.Hex.encodeHexString;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 import com.securionpay.connection.Connection;
 import com.securionpay.connection.HttpClientConnection;
 import com.securionpay.connection.Response;
 import com.securionpay.exception.SecurionPayException;
-import com.securionpay.request.BlacklistRuleListRequest;
-import com.securionpay.request.BlacklistRuleRequest;
-import com.securionpay.request.CaptureRequest;
-import com.securionpay.request.CardListRequest;
-import com.securionpay.request.CardRequest;
-import com.securionpay.request.CardUpdateRequest;
-import com.securionpay.request.ChargeListRequest;
-import com.securionpay.request.ChargeRequest;
-import com.securionpay.request.ChargeUpdateRequest;
-import com.securionpay.request.CustomerListRequest;
-import com.securionpay.request.CustomerRequest;
-import com.securionpay.request.CustomerUpdateRequest;
-import com.securionpay.request.EventListRequest;
-import com.securionpay.request.SubscriptionCancelRequest;
-import com.securionpay.request.SubscriptionListRequest;
-import com.securionpay.request.PlanListRequest;
-import com.securionpay.request.PlanRequest;
-import com.securionpay.request.PlanUpdateRequest;
-import com.securionpay.request.RefundRequest;
-import com.securionpay.request.SubscriptionRequest;
-import com.securionpay.request.SubscriptionUpdateRequest;
-import com.securionpay.request.TokenRequest;
-import com.securionpay.response.BlacklistRule;
-import com.securionpay.response.Card;
-import com.securionpay.response.Charge;
-import com.securionpay.response.Customer;
-import com.securionpay.response.DeleteResponse;
-import com.securionpay.response.ErrorResponse;
-import com.securionpay.response.Event;
-import com.securionpay.response.ListResponse;
-import com.securionpay.response.Plan;
-import com.securionpay.response.Subscription;
-import com.securionpay.response.Token;
+import com.securionpay.exception.SignException;
+import com.securionpay.request.*;
+import com.securionpay.response.*;
 import com.securionpay.util.ObjectSerializer;
 import com.securionpay.util.SecurionPayUtils;
 
@@ -60,6 +34,11 @@ public class SecurionPayGateway implements Closeable {
 	private static final String SUBSCRIPTIONS_PATH = "/customers/%s/subscriptions";
 	private static final String EVENTS_PATH = "/events";
 	private static final String BLACKLIST_RULE_PATH = "/blacklist";
+	private static final String CROSS_SALE_OFFER_PATH = "/cross-sale-offers";
+	private static final String CUSTOMER_RECORDS_PATH = "/customer-records";
+	private static final String CUSTOMER_RECORD_FEES_PATH = "/customer-records/%s/fees";
+	private static final String CUSTOMER_RECORD_PROFITS_PATH = "/customer-records/%s/profits";
+	private static final String UTF_8 = "UTF-8";
 
 	private final ObjectSerializer objectSerializer = ObjectSerializer.INSTANCE;
 
@@ -247,6 +226,93 @@ public class SecurionPayGateway implements Closeable {
 		return list(BLACKLIST_RULE_PATH, request, BlacklistRule.class);
 	}
 
+	public CrossSaleOffer createCrossSaleOffer(CrossSaleOfferRequest request) {
+		return post(CROSS_SALE_OFFER_PATH, request, CrossSaleOffer.class);
+	}
+
+	public CrossSaleOffer retrieveCrossSaleOffer(String crossSaleOfferId) {
+		return get(CROSS_SALE_OFFER_PATH + "/" + crossSaleOfferId, CrossSaleOffer.class);
+	}
+
+	public CrossSaleOffer updateCrossSaleOffer(CrossSaleOfferUpdateRequest request) {
+		return post(CROSS_SALE_OFFER_PATH + "/" + request.getCrossSaleOfferId(), request, CrossSaleOffer.class);
+	}
+
+	public DeleteResponse deleteCrossSaleOffer(String crossSaleOfferId) {
+		return delete(CROSS_SALE_OFFER_PATH + "/" + crossSaleOfferId, DeleteResponse.class);
+	}
+
+	public ListResponse<CrossSaleOffer> listCrossSaleOffers() {
+		return list(CROSS_SALE_OFFER_PATH, CrossSaleOffer.class);
+	}
+
+	public ListResponse<CrossSaleOffer> listCrossSaleOffers(CrossSaleOfferListRequest request) {
+		return list(CROSS_SALE_OFFER_PATH, request, CrossSaleOffer.class);
+	}
+
+	public CustomerRecord createCustomerRecord(CustomerRecordRequest request) {
+		return post(CUSTOMER_RECORDS_PATH, request, CustomerRecord.class);
+	}
+
+	public CustomerRecord refreshCustomerRecord(CustomerRecordRefreshRequest request) {
+		return post(CUSTOMER_RECORDS_PATH + "/" + request.getCustomerRecordId(), request, CustomerRecord.class);
+	}
+
+	public CustomerRecord retrieveCustomerRecord(String customerRecordId) {
+		return get(CUSTOMER_RECORDS_PATH + "/" + customerRecordId, CustomerRecord.class);
+	}
+
+	public ListResponse<CustomerRecord> listCustomerRecords() {
+		return list(CUSTOMER_RECORDS_PATH, CustomerRecord.class);
+	}
+
+	public ListResponse<CustomerRecord> listCustomerRecords(CustomerRecordListRequest request) {
+		return list(CUSTOMER_RECORDS_PATH, request, CustomerRecord.class);
+	}
+
+	public CustomerRecordFee retrieveCustomerRecordFee(String customerRecordId, String customerRecordFeeId) {
+		return get(format(CUSTOMER_RECORD_FEES_PATH, customerRecordId) + "/" + customerRecordFeeId,
+				CustomerRecordFee.class);
+	}
+
+	public ListResponse<CustomerRecordFee> listCustomerRecordFees(String customerRecordId) {
+		return list(format(CUSTOMER_RECORD_FEES_PATH, customerRecordId), CustomerRecordFee.class);
+	}
+
+	public ListResponse<CustomerRecordFee> listCustomerRecordFees(CustomerRecordFeeListRequest request) {
+		return list(format(CUSTOMER_RECORD_FEES_PATH, request.getCustomerRecordId()), request, CustomerRecordFee.class);
+	}
+
+	public CustomerRecordProfit retrieveCustomerRecordProfit(String customerRecordId, String customerRecordProfitId) {
+		return get(format(CUSTOMER_RECORD_PROFITS_PATH, customerRecordId) + "/" + customerRecordProfitId,
+				CustomerRecordProfit.class);
+	}
+
+	public ListResponse<CustomerRecordProfit> listCustomerRecordProfits(String customerRecordId) {
+		return list(format(CUSTOMER_RECORD_PROFITS_PATH, customerRecordId), CustomerRecordProfit.class);
+	}
+
+	public ListResponse<CustomerRecordProfit> listCustomerRecordProfits(CustomerRecordProfitListRequest request) {
+		return list(format(CUSTOMER_RECORD_PROFITS_PATH, request.getCustomerRecordId()), request,
+				CustomerRecordProfit.class);
+	}
+
+	public String signCheckoutRequest(CheckoutRequest checkoutRequest) {
+		String data = objectSerializer.serialize(checkoutRequest);
+
+		try {
+			String algorithm = "HmacSHA256";
+
+			Mac hmac = Mac.getInstance(algorithm);
+			hmac.init(new SecretKeySpec(privateKey.getBytes(UTF_8), algorithm));
+			String signature = encodeHexString(hmac.doFinal(data.getBytes(UTF_8)));
+
+			return encodeBase64String((signature + "|" + data).getBytes(UTF_8));
+		} catch (Exception ex) {
+			throw new SignException(ex);
+		}
+	}
+
 	@Override
 	public void close() throws IOException {
 		if (connection != null) {
@@ -308,7 +374,7 @@ public class SecurionPayGateway implements Closeable {
 	private Map<String, String> buildHeaders() {
 		Map<String, String> headers = new HashMap<String, String>();
 
-		headers.put("Authorization", "Basic " + Base64.getEncoder().encodeToString((privateKey + ":").getBytes()));
+		headers.put("Authorization", "Basic " + encodeBase64String((privateKey + ":").getBytes()));
 		headers.put("Content-Type", "application/json");
 		headers.put("User-Agent", "SecurionPay-Java/" + SecurionPayUtils.getBuildVersion()
 				+ " (Java/" + SecurionPayUtils.getJavaVersion() + ")");

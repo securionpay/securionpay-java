@@ -32,7 +32,17 @@ public enum EventType {
 	PLAN_CREATED("PLAN_CREATED"),
 	PLAN_UPDATED("PLAN_UPDATED"),
 	PLAN_DELETED("PLAN_DELETED"),
-	
+
+	CROSS_SALE_OFFER_CREATED("CROSS_SALE_OFFER_CREATED"),
+	CROSS_SALE_OFFER_UPDATED("CROSS_SALE_OFFER_UPDATED"),
+	CROSS_SALE_OFFER_DELETED("CROSS_SALE_OFFER_DELETED"),
+
+	CUSTOMER_RECORD_CREATED("CUSTOMER_RECORD_CREATED"),
+	CUSTOMER_RECORD_REFRESHED("CUSTOMER_RECORD_REFRESHED"),
+
+	CUSTOMER_RECORD_PROFIT_RECEIVED("CUSTOMER_RECORD_PROFIT_RECEIVED"),
+	CUSTOMER_RECORD_FEE_RECEIVED("CUSTOMER_RECORD_FEE_RECEIVED"),
+
 	/**
 	 * Used when received value can't be mapped to this enumeration.
 	 */
@@ -40,15 +50,15 @@ public enum EventType {
 
 	private final String value;
 
-	private EventType(String value) {
+	EventType(String value) {
 		this.value = value;
 	}
 
 	@JsonCreator
 	public static EventType fromValue(String value) {
-		for (EventType errorType : values()) {
-			if (errorType.value.equalsIgnoreCase(value)) {
-				return errorType;
+		for (EventType eventType : values()) {
+			if (eventType.value.equalsIgnoreCase(value)) {
+				return eventType;
 			}
 		}
 

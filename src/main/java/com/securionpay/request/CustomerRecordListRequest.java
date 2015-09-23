@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.securionpay.response.BlacklistRule;
+import com.securionpay.response.CustomerRecord;
 
 @JsonInclude(Include.NON_NULL)
-public class BlacklistRuleListRequest {
+public class CustomerRecordListRequest {
 
 	private Integer limit;
 	private String startingAfterId;
@@ -19,7 +19,6 @@ public class BlacklistRuleListRequest {
 	private Boolean includeTotalCount;
 
 	private CreatedFilter created;
-	private Boolean deleted;
 
 	@JsonIgnore
 	private Map<String, Object> other = new HashMap<String, Object>();
@@ -44,49 +43,40 @@ public class BlacklistRuleListRequest {
 		return created;
 	}
 
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public BlacklistRuleListRequest limit(Integer limit) {
+	public CustomerRecordListRequest limit(Integer limit) {
 		this.limit = limit;
 		return this;
 	}
 
-	public BlacklistRuleListRequest startingAfterId(String startingAfterId) {
+	public CustomerRecordListRequest startingAfterId(String startingAfterId) {
 		this.startingAfterId = startingAfterId;
 		return this;
 	}
 
-	public BlacklistRuleListRequest startingAfter(BlacklistRule blacklistRule) {
-		return startingAfterId(blacklistRule.getId());
+	public CustomerRecordListRequest startingAfter(CustomerRecord customerRecord) {
+		return startingAfterId(customerRecord.getId());
 	}
 
-	public BlacklistRuleListRequest endingBeforeId(String endingBeforeId) {
+	public CustomerRecordListRequest endingBeforeId(String endingBeforeId) {
 		this.endingBeforeId = endingBeforeId;
 		return this;
 	}
 
-	public BlacklistRuleListRequest endingBefore(BlacklistRule blacklistRule) {
-		return endingBeforeId(blacklistRule.getId());
+	public CustomerRecordListRequest endingBefore(CustomerRecord customerRecord) {
+		return endingBeforeId(customerRecord.getId());
 	}
 
-	public BlacklistRuleListRequest includeTotalCount(Boolean includeTotalCount) {
+	public CustomerRecordListRequest includeTotalCount(Boolean includeTotalCount) {
 		this.includeTotalCount = includeTotalCount;
 		return this;
 	}
 
-	public BlacklistRuleListRequest includeTotalCount() {
+	public CustomerRecordListRequest includeTotalCount() {
 		return includeTotalCount(true);
 	}
 
-	public BlacklistRuleListRequest created(CreatedFilter created) {
+	public CustomerRecordListRequest created(CreatedFilter created) {
 		this.created = created;
-		return this;
-	}
-
-	public BlacklistRuleListRequest deleted(Boolean deleted) {
-		this.deleted = deleted;
 		return this;
 	}
 
@@ -96,7 +86,7 @@ public class BlacklistRuleListRequest {
 	}
 
 	@JsonAnySetter
-	public BlacklistRuleListRequest set(String name, Object value) {
+	public CustomerRecordListRequest set(String name, Object value) {
 		other.put(name, value);
 		return this;
 	}

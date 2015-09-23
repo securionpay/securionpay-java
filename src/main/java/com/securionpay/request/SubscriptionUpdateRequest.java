@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.securionpay.response.Subscription;
 
-@JsonInclude(Include.NON_EMPTY)
+@JsonInclude(Include.NON_NULL)
 public class SubscriptionUpdateRequest {
 
 	@JsonIgnore
@@ -21,6 +21,7 @@ public class SubscriptionUpdateRequest {
 	private String planId;
 	private CardRequest card;
 	private Integer quantity;
+	private Boolean captureCharges;
 	private Long trialEnd;
 	private Map<String, String> metadata;
 
@@ -58,6 +59,10 @@ public class SubscriptionUpdateRequest {
 		return quantity;
 	}
 
+	public Boolean getCaptureCharges() {
+		return captureCharges;
+	}
+
 	public Long getTrialEnd() {
 		return trialEnd;
 	}
@@ -92,6 +97,11 @@ public class SubscriptionUpdateRequest {
 
 	public SubscriptionUpdateRequest quantity(Integer quantity) {
 		this.quantity = quantity;
+		return this;
+	}
+
+	public SubscriptionUpdateRequest captureCharges(Boolean captureCharges) {
+		this.captureCharges = captureCharges;
 		return this;
 	}
 

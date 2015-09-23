@@ -58,10 +58,10 @@ public class ObjectSerializer {
 			throw new MappingException(e);
 		}
 	}
-	
+
 	public String serializeToQueryString(Object request) {
 		ObjectNode node = objectMapper.valueToTree(request);
-		
+
 		if (node instanceof ObjectNode == false) {
 			return "";
 		}

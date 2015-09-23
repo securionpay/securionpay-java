@@ -20,7 +20,7 @@ import com.securionpay.exception.ConnectionException;
 public class HttpClientConnection implements Connection {
 
 	private static final Charset UTF8 = Charset.forName("UTF-8");
-	
+
 	private final CloseableHttpClient httpClient;
 
 	public HttpClientConnection() {
@@ -36,7 +36,7 @@ public class HttpClientConnection implements Connection {
 	public Response post(String url, String requestBody, Map<String, String> headers) {
 		HttpPost post = new HttpPost(url);
 		post.setEntity(new StringEntity(requestBody, UTF8));
-		
+
 		return execute(post, headers);
 	}
 
@@ -49,23 +49,23 @@ public class HttpClientConnection implements Connection {
 		for (Entry<String, String> header : headers.entrySet()) {
 			String headerName = header.getKey();
 			String headerValue = header.getValue();
-			
+
 			if ("User-Agent".equalsIgnoreCase(headerName)) {
-				headerValue += " HttpClient"; 
+				headerValue += " HttpClient";
 			}
-			
+
 			request.addHeader(headerName, headerValue);
 		}
 
 		try (CloseableHttpResponse response = httpClient.execute(request)) {
 			return new Response(
-					response.getStatusLine().getStatusCode(), 
+					response.getStatusLine().getStatusCode(),
 					EntityUtils.toString(response.getEntity(), UTF8));
 		} catch (IOException e) {
 			throw new ConnectionException(e);
 		}
 	}
-	
+
 	@Override
 	public void close() throws IOException {
 		httpClient.close();
