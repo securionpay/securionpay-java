@@ -25,7 +25,7 @@ If you don't want to use Maven then you can download [the latest release](https:
 ## Quick start example
 
 ```java
-SecurionPayGateway gateway = new SecurionPayGateway("pr_test_[YOUR_PRIVATE_KEY]");
+SecurionPayGateway gateway = new SecurionPayGateway("sk_test_[YOUR_SECRET_KEY]");
 
 ChargeRequest request = new ChargeRequest()
 		.amount(499)
