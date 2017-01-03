@@ -18,10 +18,13 @@ public class ChargeUpdateRequest {
 
 	private String description;
 	private String customerId;
+	private ShippingRequest shipping;
+	private BillingRequest billing;
+	private FraudDetailsRequest fraudDetails;
 	private Map<String, String> metadata;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private Map<String, Object> other = new HashMap<>();
 
 	public ChargeUpdateRequest() {
 	}
@@ -46,6 +49,18 @@ public class ChargeUpdateRequest {
 		return customerId;
 	}
 
+	public BillingRequest getBilling() {
+		return billing;
+	}
+
+	public ShippingRequest getShipping() {
+		return shipping;
+	}
+
+	public FraudDetailsRequest getFraudDetails() {
+		return fraudDetails;
+	}
+
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
@@ -66,6 +81,21 @@ public class ChargeUpdateRequest {
 
 	public ChargeUpdateRequest customerId(String customerId) {
 		this.customerId = customerId;
+		return this;
+	}
+
+	public ChargeUpdateRequest shipping(ShippingRequest shipping) {
+		this.shipping = shipping;
+		return this;
+	}
+
+	public ChargeUpdateRequest billing(BillingRequest billing) {
+		this.billing = billing;
+		return this;
+	}
+
+	public ChargeUpdateRequest fraudDetails(FraudDetailsRequest fraudDetails) {
+		this.fraudDetails = fraudDetails;
 		return this;
 	}
 

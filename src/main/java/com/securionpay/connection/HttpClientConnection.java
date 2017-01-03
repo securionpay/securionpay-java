@@ -24,7 +24,11 @@ public class HttpClientConnection implements Connection {
 	private final CloseableHttpClient httpClient;
 
 	public HttpClientConnection() {
-		httpClient = HttpClientBuilder.create().build();
+		this(HttpClientBuilder.create().build());
+	}
+	
+	public HttpClientConnection(CloseableHttpClient httpClient) {
+		this.httpClient = httpClient;
 	}
 
 	@Override

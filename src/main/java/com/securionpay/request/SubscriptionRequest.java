@@ -22,6 +22,8 @@ public class SubscriptionRequest {
 	private Integer quantity;
 	private Boolean captureCharges;
 	private Long trialEnd;
+	private ShippingRequest shipping;
+	private BillingRequest billing;
 	private Map<String, String> metadata = new HashMap<>();
 
 	@JsonIgnore
@@ -60,6 +62,14 @@ public class SubscriptionRequest {
 
 	public Long getTrialEnd() {
 		return trialEnd;
+	}
+
+	public ShippingRequest getShipping() {
+		return shipping;
+	}
+
+	public BillingRequest getBilling() {
+		return billing;
 	}
 
 	public Map<String, String> getMetadata() {
@@ -101,6 +111,16 @@ public class SubscriptionRequest {
 
 	public SubscriptionRequest captureCharges(Boolean captureCharges) {
 		this.captureCharges = captureCharges;
+		return this;
+	}
+
+	public SubscriptionRequest shipping(ShippingRequest shipping) {
+		this.shipping = shipping;
+		return this;
+	}
+
+	public SubscriptionRequest billing(BillingRequest billing) {
+		this.billing = billing;
 		return this;
 	}
 

@@ -7,6 +7,8 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.securionpay.enums.CardBrand;
+import com.securionpay.enums.CardType;
 
 public class Token {
 
@@ -20,6 +22,9 @@ public class Token {
 	private String expMonth;
 	private String expYear;
 
+	private CardBrand brand;
+	private CardType type;
+
 	private String cardholderName;
 	private Boolean used;
 	private Card card;
@@ -32,6 +37,7 @@ public class Token {
 	private String addressCountry;
 
 	private FraudCheckData fraudCheckData;
+	private ThreeDSecureInfo threeDSecureInfo;
 
 	@JsonIgnore
 	private Map<String, Object> other = new HashMap<String, Object>();
@@ -62,6 +68,14 @@ public class Token {
 
 	public String getExpYear() {
 		return expYear;
+	}
+
+	public CardBrand getBrand() {
+		return brand;
+	}
+
+	public CardType getType() {
+		return type;
 	}
 
 	public String getCardholderName() {
@@ -102,6 +116,10 @@ public class Token {
 
 	public FraudCheckData getFraudCheckData() {
 		return fraudCheckData;
+	}
+
+	public ThreeDSecureInfo getThreeDSecureInfo() {
+		return threeDSecureInfo;
 	}
 
 	public String get(String name) {

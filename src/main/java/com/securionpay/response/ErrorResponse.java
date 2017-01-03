@@ -19,8 +19,16 @@ public class ErrorResponse {
 		return error.getCode();
 	}
 
+	public String getIssuerDeclineCode() {
+		return error.getIssuerDeclineCode();
+	}
+
 	public String getChargeId() {
 		return error.getChargeId();
+	}
+
+	public String getCreditId() {
+		return error.getCreditId();
 	}
 
 	public String getBlacklistRuleId() {
@@ -32,7 +40,9 @@ public class ErrorResponse {
 		private String message;
 		private ErrorType type;
 		private ErrorCode code;
+		private String issuerDeclineCode;
 		private String chargeId;
+		private String creditId;
 		private String blacklistRuleId;
 
 		public String getMessage() {
@@ -47,8 +57,16 @@ public class ErrorResponse {
 			return code;
 		}
 
+		public String getIssuerDeclineCode() {
+			return issuerDeclineCode;
+		}
+
 		public String getChargeId() {
 			return chargeId;
+		}
+
+		public String getCreditId() {
+			return creditId;
 		}
 
 		public String getBlacklistRuleId() {

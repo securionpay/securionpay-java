@@ -16,6 +16,7 @@ public class BlacklistRuleRequest {
 	private BlacklistRuleType ruleType;
 
 	private String fingerprint;
+	private String cardNumber;
 	private String ipAddress;
 	private String ipCountry;
 	private String metadataKey;
@@ -40,6 +41,10 @@ public class BlacklistRuleRequest {
 
 	public String getFingerprint() {
 		return fingerprint;
+	}
+
+	public String getCardNumber() {
+		return cardNumber;
 	}
 
 	public String getIpAddress() {
@@ -77,6 +82,11 @@ public class BlacklistRuleRequest {
 
 	public BlacklistRuleRequest fingerprint(String fingerprint) {
 		this.fingerprint = fingerprint;
+		return this;
+	}
+
+	public BlacklistRuleRequest cardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 		return this;
 	}
 

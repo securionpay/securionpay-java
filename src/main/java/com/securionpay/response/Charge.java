@@ -25,13 +25,19 @@ public class Charge {
 	private List<Refund> refunds;
 	private Boolean disputed;
 	private FraudDetails fraudDetails;
+	private Shipping shipping;
+	private Billing billing;
+	private ThreeDSecureInfo threeDSecureInfo;
 
 	private FromCrossSale fromCrossSale;
 	private List<WithCrossSale> withCrossSales;
 
+	private Dispute dispute;
+	
 	private Map<String, String> metadata;
 
 	private ErrorCode failureCode;
+	private String failureIssuerDeclineCode;
 	private String failureMessage;
 
 	@JsonIgnore
@@ -89,6 +95,18 @@ public class Charge {
 		return fraudDetails;
 	}
 
+	public Shipping getShipping() {
+		return shipping;
+	}
+
+	public Billing getBilling() {
+		return billing;
+	}
+
+	public ThreeDSecureInfo getThreeDSecureInfo() {
+		return threeDSecureInfo;
+	}
+
 	public FromCrossSale getFromCrossSale() {
 		return fromCrossSale;
 	}
@@ -97,12 +115,20 @@ public class Charge {
 		return withCrossSales;
 	}
 
+	public Dispute getDispute() {
+		return dispute;
+	}
+	
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
 
 	public ErrorCode getFailureCode() {
 		return failureCode;
+	}
+
+	public String getFailureIssuerDeclineCode() {
+		return failureIssuerDeclineCode;
 	}
 
 	public String getFailureMessage() {

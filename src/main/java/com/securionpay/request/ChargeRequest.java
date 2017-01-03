@@ -19,6 +19,9 @@ public class ChargeRequest {
 	private String customerId;
 	private CardRequest card;
 	private Boolean captured;
+	private ShippingRequest shipping;
+	private BillingRequest billing;
+	private ThreeDSecureRequest threeDSecure;
 	private Map<String, String> metadata;
 
 	@JsonIgnore
@@ -55,6 +58,18 @@ public class ChargeRequest {
 		return captured;
 	}
 
+	public BillingRequest getBilling() {
+		return billing;
+	}
+
+	public ShippingRequest getShipping() {
+		return shipping;
+	}
+
+	public ThreeDSecureRequest getThreeDSecure() {
+		return threeDSecure;
+	}
+
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
@@ -74,13 +89,13 @@ public class ChargeRequest {
 		return this;
 	}
 
-	public ChargeRequest customerId(String cusomerId) {
-		this.customerId = cusomerId;
+	public ChargeRequest customerId(String customerId) {
+		this.customerId = customerId;
 		return this;
 	}
 
-	public ChargeRequest customerId(Customer cusomer) {
-		return customerId(cusomer.getId());
+	public ChargeRequest customerId(Customer customer) {
+		return customerId(customer.getId());
 	}
 
 	public ChargeRequest card(CardRequest card) {
@@ -90,6 +105,21 @@ public class ChargeRequest {
 
 	public ChargeRequest captured(Boolean captured) {
 		this.captured = captured;
+		return this;
+	}
+
+	public ChargeRequest shipping(ShippingRequest shipping) {
+		this.shipping = shipping;
+		return this;
+	}
+
+	public ChargeRequest billing(BillingRequest billing) {
+		this.billing = billing;
+		return this;
+	}
+
+	public ChargeRequest threeDSecure(ThreeDSecureRequest threeDSecure) {
+		this.threeDSecure = threeDSecure;
 		return this;
 	}
 

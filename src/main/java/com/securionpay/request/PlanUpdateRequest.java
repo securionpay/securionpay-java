@@ -16,6 +16,9 @@ public class PlanUpdateRequest {
 	@JsonIgnore
 	private String planId;
 
+	private Integer amount;
+	private String currency;
+
 	private String name;
 	private String statementDescription;
 	private Map<String, String> metadata;
@@ -36,6 +39,14 @@ public class PlanUpdateRequest {
 
 	public String getPlanId() {
 		return planId;
+	}
+	
+	public Integer getAmount() {
+		return amount;
+	}
+	
+	public String getCurrency() {
+		return currency;
 	}
 
 	public String getName() {
@@ -59,6 +70,16 @@ public class PlanUpdateRequest {
 		return planId(plan.getId());
 	}
 
+	public PlanUpdateRequest amount(Integer amount) {
+		this.amount = amount;
+		return this;
+	}
+
+	public PlanUpdateRequest currency(String currency) {
+		this.currency = currency;
+		return this;
+	}
+	
 	public PlanUpdateRequest name(String name) {
 		this.name = name;
 		return this;

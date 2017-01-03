@@ -3,13 +3,9 @@ package com.securionpay.enums;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Interval {
+public enum RefundReason {
 
-	HOUR("hour"),
-	DAY("day"),
-	WEEK("week"),
-	MONTH("month"),
-	YEAR("year"),
+	FRAUDULENT("fraudulent"),
 
 	/**
 	 * Used when received value can't be mapped to this enumeration.
@@ -18,13 +14,13 @@ public enum Interval {
 
 	private final String value;
 
-	private Interval(String value) {
+	RefundReason(String value) {
 		this.value = value;
 	}
 
 	@JsonCreator
-	public static Interval fromValue(String value) {
-		for (Interval interval : values()) {
+	public static RefundReason fromValue(String value) {
+		for (RefundReason interval : values()) {
 			if (interval.value.equalsIgnoreCase(value)) {
 				return interval;
 			}

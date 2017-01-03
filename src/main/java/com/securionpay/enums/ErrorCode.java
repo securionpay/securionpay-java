@@ -19,6 +19,7 @@ public enum ErrorCode {
 	PROCESSING_ERROR("processing_error"),
 	BLACKLISTED("blacklisted"),
 	EXPIRED_TOKEN("expired_token"),
+	LIMIT_EXCEEDED("limit_exceeded"),
 
 	/**
 	 * Used when received value can't be mapped to this enumeration.
@@ -27,7 +28,7 @@ public enum ErrorCode {
 
 	private final String value;
 
-	private ErrorCode(String value) {
+	ErrorCode(String value) {
 		this.value = value;
 	}
 

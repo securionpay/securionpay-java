@@ -8,15 +8,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.securionpay.response.Card;
-import com.securionpay.response.Charge;
-import com.securionpay.response.CrossSaleOffer;
-import com.securionpay.response.Customer;
-import com.securionpay.response.CustomerRecord;
-import com.securionpay.response.CustomerRecordFee;
-import com.securionpay.response.CustomerRecordProfit;
-import com.securionpay.response.Plan;
-import com.securionpay.response.Subscription;
+import com.securionpay.response.*;
 
 public class EventDataDeserializer extends JsonDeserializer<Object> {
 
@@ -27,6 +19,7 @@ public class EventDataDeserializer extends JsonDeserializer<Object> {
 		OBJECT_TYPES.put("customer", Customer.class);
 		OBJECT_TYPES.put("card", Card.class);
 		OBJECT_TYPES.put("charge", Charge.class);
+		OBJECT_TYPES.put("dispute", Dispute.class);
 		OBJECT_TYPES.put("plan", Plan.class);
 		OBJECT_TYPES.put("subscription", Subscription.class);
 		OBJECT_TYPES.put("crossSaleOffer", CrossSaleOffer.class);

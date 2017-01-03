@@ -29,6 +29,9 @@ public class Subscription {
 	private Long trialStart;
 	private Long trialEnd;
 	private Boolean cancelAtPeriodEnd;
+	private Shipping shipping;
+	private Billing billing;
+	private ThreeDSecureInfo threeDSecureInfo;
 	private Map<String, String> metadata;
 
 	@JsonIgnore
@@ -100,6 +103,18 @@ public class Subscription {
 
 	public Boolean getCancelAtPeriodEnd() {
 		return cancelAtPeriodEnd;
+	}
+
+	public Shipping getShipping() {
+		return shipping;
+	}
+
+	public Billing getBilling() {
+		return billing;
+	}
+
+	public ThreeDSecureInfo getThreeDSecureInfo() {
+		return threeDSecureInfo;
 	}
 
 	public Map<String, String> getMetadata() {

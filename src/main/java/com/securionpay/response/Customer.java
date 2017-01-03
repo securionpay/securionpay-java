@@ -2,6 +2,7 @@ package com.securionpay.response;
 
 import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,10 @@ public class Customer {
 	}
 
 	public Card getDefaultCard() {
+		if (getCards() == null) {
+			return null;
+		}
+
 		for (Card card : getCards()) {
 			if (card.getId().equals(getDefaultCardId())) {
 				return card;

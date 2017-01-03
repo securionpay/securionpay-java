@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.securionpay.enums.RefundReason;
 import com.securionpay.response.Charge;
 
 @JsonInclude(Include.NON_NULL)
@@ -18,8 +19,10 @@ public class RefundRequest {
 
 	private Integer amount;
 
+	private RefundReason reason;
+
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private Map<String, Object> other = new HashMap<>();
 
 	public RefundRequest() {
 	}
@@ -40,6 +43,10 @@ public class RefundRequest {
 		return amount;
 	}
 
+	public RefundReason getReason() {
+		return reason;
+	}
+
 	public RefundRequest chargeId(String chargeId) {
 		this.chargeId = chargeId;
 		return this;
@@ -51,6 +58,11 @@ public class RefundRequest {
 
 	public RefundRequest amount(Integer amount) {
 		this.amount = amount;
+		return this;
+	}
+
+	public RefundRequest reason(RefundReason reason) {
+		this.reason = reason;
 		return this;
 	}
 

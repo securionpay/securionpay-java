@@ -38,6 +38,7 @@ public class SecurionPayGateway implements Closeable {
 	private static final String CUSTOMER_RECORDS_PATH = "/customer-records";
 	private static final String CUSTOMER_RECORD_FEES_PATH = "/customer-records/%s/fees";
 	private static final String CUSTOMER_RECORD_PROFITS_PATH = "/customer-records/%s/profits";
+	private static final String CREDIT_PATH = "/credits";
 	private static final String UTF_8 = "UTF-8";
 
 	private final ObjectSerializer objectSerializer = ObjectSerializer.INSTANCE;
@@ -297,6 +298,26 @@ public class SecurionPayGateway implements Closeable {
 				CustomerRecordProfit.class);
 	}
 
+	public Credit createCredit(CreditRequest request) {
+		return post(CREDIT_PATH, request, Credit.class);
+	}
+
+	public Credit retrieveCredit(String creditId) {
+		return get(CREDIT_PATH + "/" + creditId, Credit.class);
+	}
+
+	public Credit updateCredit(CreditUpdateRequest credit) {
+		return post(CREDIT_PATH + "/" + credit.getCreditId(), credit, Credit.class);
+	}
+
+	public ListResponse<Credit> listCredits() {
+		return list(CREDIT_PATH, Credit.class);
+	}
+
+	public ListResponse<Credit> listCredits(CreditListRequest request) {
+		return list(CREDIT_PATH, request, Credit.class);
+	}
+
 	public String signCheckoutRequest(CheckoutRequest checkoutRequest) {
 		String data = objectSerializer.serialize(checkoutRequest);
 
@@ -320,35 +341,35 @@ public class SecurionPayGateway implements Closeable {
 		}
 	}
 
-	private <T> T get(String path, Class<T> responseClass) {
+	protected <T> T get(String path, Class<T> responseClass) {
 		Response response = connection.get(endpoint + path, buildHeaders());
 		ensureSuccess(response);
 		return objectSerializer.deserialize(response.getBody(), responseClass);
 	}
 
-	private <T> T post(String path, Object request, Class<T> responseClass) {
+	protected <T> T post(String path, Object request, Class<T> responseClass) {
 		String requestBody = objectSerializer.serialize(request);
 		Response response = connection.post(endpoint + path, requestBody, buildHeaders());
 		ensureSuccess(response);
 		return objectSerializer.deserialize(response.getBody(), responseClass);
 	}
 
-	private <T> ListResponse<T> list(String path, Class<T> elementClass) {
+	protected <T> ListResponse<T> list(String path, Class<T> elementClass) {
 		return list(path, null, elementClass);
 	}
 
-	private <T> ListResponse<T> list(String path, Object request, Class<T> elementClass) {
+	protected <T> ListResponse<T> list(String path, Object request, Class<T> elementClass) {
 		String url = buildQueryString(endpoint + path, request);
 		Response response = connection.get(url, buildHeaders());
 		ensureSuccess(response);
 		return objectSerializer.deserializeList(response.getBody(), elementClass);
 	}
 
-	private <T> T delete(String path, Class<T> responseClass) {
+	protected <T> T delete(String path, Class<T> responseClass) {
 		return delete(path, null, responseClass);
 	}
 
-	private <T> T delete(String path, Object request, Class<T> responseClass) {
+	protected  <T> T delete(String path, Object request, Class<T> responseClass) {
 		String url = buildQueryString(endpoint + path, request);
 		Response response = connection.delete(url, buildHeaders());
 		ensureSuccess(response);
@@ -371,7 +392,7 @@ public class SecurionPayGateway implements Closeable {
 		return url + objectSerializer.serializeToQueryString(request);
 	}
 
-	private Map<String, String> buildHeaders() {
+	protected Map<String, String> buildHeaders() {
 		Map<String, String> headers = new HashMap<String, String>();
 
 		headers.put("Authorization", "Basic " + encodeBase64String((privateKey + ":").getBytes()));

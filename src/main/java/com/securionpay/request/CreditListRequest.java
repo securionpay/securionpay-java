@@ -1,5 +1,7 @@
 package com.securionpay.request;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,22 +9,17 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.securionpay.response.Customer;
+import com.securionpay.response.Credit;
 
-@JsonInclude(Include.NON_NULL)
-public class CustomerListRequest {
-
+@JsonInclude(NON_NULL)
+public class CreditListRequest {
 	private Integer limit;
 	private String startingAfterId;
 	private String endingBeforeId;
 	private Boolean includeTotalCount;
 
 	private CreatedFilter created;
-	private Boolean deleted;
 
-	private String email;
-	
 	@JsonIgnore
 	private Map<String, Object> other = new HashMap<String, Object>();
 
@@ -46,58 +43,40 @@ public class CustomerListRequest {
 		return created;
 	}
 
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public CustomerListRequest limit(Integer limit) {
+	public CreditListRequest limit(Integer limit) {
 		this.limit = limit;
 		return this;
 	}
 
-	public CustomerListRequest startingAfterId(String startingAfterId) {
+	public CreditListRequest startingAfterId(String startingAfterId) {
 		this.startingAfterId = startingAfterId;
 		return this;
 	}
 
-	public CustomerListRequest startingAfter(Customer customer) {
-		return startingAfterId(customer.getId());
+	public CreditListRequest startingAfter(Credit credit) {
+		return startingAfterId(credit.getId());
 	}
 
-	public CustomerListRequest endingBeforeId(String endingBeforeId) {
+	public CreditListRequest endingBeforeId(String endingBeforeId) {
 		this.endingBeforeId = endingBeforeId;
 		return this;
 	}
 
-	public CustomerListRequest endingBefore(Customer customer) {
-		return endingBeforeId(customer.getId());
+	public CreditListRequest endingBefore(Credit credit) {
+		return endingBeforeId(credit.getId());
 	}
 
-	public CustomerListRequest includeTotalCount(Boolean includeTotalCount) {
+	public CreditListRequest includeTotalCount(Boolean includeTotalCount) {
 		this.includeTotalCount = includeTotalCount;
 		return this;
 	}
 
-	public CustomerListRequest includeTotalCount() {
+	public CreditListRequest includeTotalCount() {
 		return includeTotalCount(true);
 	}
 
-	public CustomerListRequest created(CreatedFilter created) {
+	public CreditListRequest created(CreatedFilter created) {
 		this.created = created;
-		return this;
-	}
-
-	public CustomerListRequest deleted(Boolean deleted) {
-		this.deleted = deleted;
-		return this;
-	}
-
-	public CustomerListRequest email(String email) {
-		this.email = email;
 		return this;
 	}
 
@@ -107,7 +86,7 @@ public class CustomerListRequest {
 	}
 
 	@JsonAnySetter
-	public CustomerListRequest set(String name, Object value) {
+	public CreditListRequest set(String name, Object value) {
 		other.put(name, value);
 		return this;
 	}
