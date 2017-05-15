@@ -12,6 +12,7 @@ import com.securionpay.enums.DisputeStatus;
 
 public class Dispute {
 
+	private String id;
 	private Long created;
 	private Long updated;
 
@@ -23,10 +24,17 @@ public class Dispute {
 
 	private Boolean acceptedAsLost;
 
+	private DisputeEvidence evidence;
+	private DisputeEvidenceDetails evidenceDetails;
+
 	private Charge charge;
 
 	@JsonIgnore
 	private Map<String, Object> other = new HashMap<String, Object>();
+
+	public String getId() {
+		return id;
+	}
 
 	public Long getCreated() {
 		return created;
@@ -54,6 +62,14 @@ public class Dispute {
 
 	public Boolean getAcceptedAsLost() {
 		return acceptedAsLost;
+	}
+
+	public DisputeEvidence getEvidence() {
+		return evidence;
+	}
+
+	public DisputeEvidenceDetails getEvidenceDetails() {
+		return evidenceDetails;
 	}
 
 	public Charge getCharge() {

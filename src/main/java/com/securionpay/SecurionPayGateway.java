@@ -5,6 +5,7 @@ import static org.apache.commons.codec.binary.Base64.encodeBase64String;
 import static org.apache.commons.codec.binary.Hex.encodeHexString;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,16 +16,36 @@ import javax.crypto.spec.SecretKeySpec;
 import com.securionpay.connection.Connection;
 import com.securionpay.connection.HttpClientConnection;
 import com.securionpay.connection.Response;
+import com.securionpay.enums.FileUploadPurpose;
 import com.securionpay.exception.SecurionPayException;
 import com.securionpay.exception.SignException;
 import com.securionpay.request.*;
-import com.securionpay.response.*;
+import com.securionpay.response.BlacklistRule;
+import com.securionpay.response.Card;
+import com.securionpay.response.Charge;
+import com.securionpay.response.Credit;
+import com.securionpay.response.CrossSaleOffer;
+import com.securionpay.response.Customer;
+import com.securionpay.response.CustomerRecord;
+import com.securionpay.response.CustomerRecordFee;
+import com.securionpay.response.CustomerRecordProfit;
+import com.securionpay.response.DeleteResponse;
+import com.securionpay.response.Dispute;
+import com.securionpay.response.ErrorResponse;
+import com.securionpay.response.Event;
+import com.securionpay.response.FileUpload;
+import com.securionpay.response.ListResponse;
+import com.securionpay.response.Plan;
+import com.securionpay.response.Subscription;
+import com.securionpay.response.Token;
+import com.securionpay.util.Base64;
 import com.securionpay.util.ObjectSerializer;
 import com.securionpay.util.SecurionPayUtils;
 
 public class SecurionPayGateway implements Closeable {
 
 	public static final String DEFAULT_ENDPOINT = "https://api.securionpay.com/";
+	public static final String UPLOADS_ENDPOINT = "https://uploads.securionpay.com/";
 
 	private static final String CHARGES_PATH = "/charges";
 	private static final String TOKENS_PATH = "/tokens";
@@ -39,6 +60,8 @@ public class SecurionPayGateway implements Closeable {
 	private static final String CUSTOMER_RECORD_FEES_PATH = "/customer-records/%s/fees";
 	private static final String CUSTOMER_RECORD_PROFITS_PATH = "/customer-records/%s/profits";
 	private static final String CREDIT_PATH = "/credits";
+	private static final String FILES_PATH = "/files";
+	private static final String DISPUTES_PATH = "/disputes";
 	private static final String UTF_8 = "UTF-8";
 
 	private final ObjectSerializer objectSerializer = ObjectSerializer.INSTANCE;
@@ -47,6 +70,7 @@ public class SecurionPayGateway implements Closeable {
 
 	private String privateKey;
 	private String endpoint = DEFAULT_ENDPOINT;
+	private String uploadsEndpoint = UPLOADS_ENDPOINT;
 
 	public SecurionPayGateway() {
 		this(null);
@@ -334,6 +358,48 @@ public class SecurionPayGateway implements Closeable {
 		}
 	}
 
+	public FileUpload createFileUpload(File file, FileUploadPurpose purpose) {
+		Map<String, File> files = new HashMap<>();
+		files.put("file", file);
+
+		Map<String, String> form = new HashMap<>();
+		form.put("purpose", purpose.getValue());
+
+		return multipart(FILES_PATH, files, form, FileUpload.class);
+	}
+
+	public FileUpload retrieveFileUpload(String id) {
+		return get(uploadsEndpoint, FILES_PATH + "/" + id, FileUpload.class);
+	}
+
+	public ListResponse<FileUpload> listFileUploads() {
+		return list(uploadsEndpoint, FILES_PATH, null, FileUpload.class);
+	}
+
+	public ListResponse<FileUpload> listFileUploads(FileUploadListRequest request) {
+		return list(uploadsEndpoint, FILES_PATH, request, FileUpload.class);
+	}
+
+	public Dispute retrieveDispute(String id) {
+		return get(DISPUTES_PATH + "/" + id, Dispute.class);
+	}
+
+	public Dispute updateDispute(String id, DisputeUpdateRequest request) {
+		return post(DISPUTES_PATH + "/" + id, request, Dispute.class);
+	}
+
+	public Dispute closeDispute(String id) {
+		return post(DISPUTES_PATH + "/" + id + "/close", null, Dispute.class);
+	}
+
+	public ListResponse<Dispute> listDisputes() {
+		return list(DISPUTES_PATH, null, Dispute.class);
+	}
+
+	public ListResponse<Dispute> listDisputes(DisputeListRequest request) {
+		return list(DISPUTES_PATH, request, Dispute.class);
+	}
+
 	@Override
 	public void close() throws IOException {
 		if (connection != null) {
@@ -342,6 +408,10 @@ public class SecurionPayGateway implements Closeable {
 	}
 
 	protected <T> T get(String path, Class<T> responseClass) {
+		return get(endpoint, path, responseClass);
+	}
+
+	protected <T> T get(String endpoint, String path, Class<T> responseClass) {
 		Response response = connection.get(endpoint + path, buildHeaders());
 		ensureSuccess(response);
 		return objectSerializer.deserialize(response.getBody(), responseClass);
@@ -354,11 +424,21 @@ public class SecurionPayGateway implements Closeable {
 		return objectSerializer.deserialize(response.getBody(), responseClass);
 	}
 
+	protected <T> T multipart(String path, Map<String, File> files, Map<String, String> form, Class<T> responseClass) {
+		Response response = connection.multipart(uploadsEndpoint + path, files, form, buildHeaders());
+		ensureSuccess(response);
+		return objectSerializer.deserialize(response.getBody(), responseClass);
+	}
+
 	protected <T> ListResponse<T> list(String path, Class<T> elementClass) {
-		return list(path, null, elementClass);
+		return list(endpoint, path, null, elementClass);
 	}
 
 	protected <T> ListResponse<T> list(String path, Object request, Class<T> elementClass) {
+		return list(endpoint, path, request, elementClass);
+	}
+
+	protected <T> ListResponse<T> list(String endpoint, String path, Object request, Class<T> elementClass) {
 		String url = buildQueryString(endpoint + path, request);
 		Response response = connection.get(url, buildHeaders());
 		ensureSuccess(response);
@@ -369,7 +449,7 @@ public class SecurionPayGateway implements Closeable {
 		return delete(path, null, responseClass);
 	}
 
-	protected  <T> T delete(String path, Object request, Class<T> responseClass) {
+	protected <T> T delete(String path, Object request, Class<T> responseClass) {
 		String url = buildQueryString(endpoint + path, request);
 		Response response = connection.delete(url, buildHeaders());
 		ensureSuccess(response);
@@ -393,9 +473,9 @@ public class SecurionPayGateway implements Closeable {
 	}
 
 	protected Map<String, String> buildHeaders() {
-		Map<String, String> headers = new HashMap<String, String>();
+		Map<String, String> headers = new HashMap<>();
 
-		headers.put("Authorization", "Basic " + encodeBase64String((privateKey + ":").getBytes()));
+		headers.put("Authorization", "Basic " + Base64.encode((privateKey + ":").getBytes()));
 		headers.put("Content-Type", "application/json");
 		headers.put("User-Agent", "SecurionPay-Java/" + SecurionPayUtils.getBuildVersion()
 				+ " (Java/" + SecurionPayUtils.getJavaVersion() + ")");
@@ -413,5 +493,9 @@ public class SecurionPayGateway implements Closeable {
 
 	public void setEndpoint(String endpoint) {
 		this.endpoint = endpoint;
+	}
+
+	public void setUploadsEndpoint(String uploadsEndpoint) {
+		this.uploadsEndpoint = uploadsEndpoint;
 	}
 }

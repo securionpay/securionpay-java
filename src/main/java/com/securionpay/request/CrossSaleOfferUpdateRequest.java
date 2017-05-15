@@ -32,6 +32,8 @@ public class CrossSaleOfferUpdateRequest {
 	private String companyLocation;
 	private String termsAndConditionsUrl;
 
+	private String url;
+
 	private Boolean visibleForAllPartners;
 	private List<String> visibleForPartnerIds;
 
@@ -172,6 +174,11 @@ public class CrossSaleOfferUpdateRequest {
 
 	public CrossSaleOfferUpdateRequest visibleForPartnerIds(List<String> visibleForPartnerIds) {
 		this.visibleForPartnerIds = visibleForPartnerIds;
+		return this;
+	}
+
+	public CrossSaleOfferUpdateRequest url(String url) {
+		this.url = url;
 		return this;
 	}
 

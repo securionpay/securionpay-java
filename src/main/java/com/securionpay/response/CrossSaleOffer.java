@@ -33,6 +33,8 @@ public class CrossSaleOffer {
 	private Boolean visibleForAllPartners;
 	private List<String> visibleForPartnerIds;
 
+	private String url;
+
 	private Map<String, String> metadata;
 
 	@JsonIgnore
@@ -96,6 +98,10 @@ public class CrossSaleOffer {
 
 	public List<String> getVisibleForPartnerIds() {
 		return visibleForPartnerIds;
+	}
+
+	public String getUrl() {
+		return url;
 	}
 
 	public Map<String, String> getMetadata() {

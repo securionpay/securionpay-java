@@ -31,6 +31,8 @@ public class CrossSaleOfferRequest {
 	private Boolean visibleForAllPartners;
 	private List<String> visibleForPartnerIds;
 
+	private String url;
+
 	private Map<String, String> metadata;
 
 	@JsonIgnore
@@ -81,6 +83,10 @@ public class CrossSaleOfferRequest {
 
 	public List<String> getVisibleForPartnerIds() {
 		return visibleForPartnerIds;
+	}
+
+	public String getUrl() {
+		return url;
 	}
 
 	public Map<String, String> getMetadata() {
@@ -152,6 +158,11 @@ public class CrossSaleOfferRequest {
 
 	public CrossSaleOfferRequest visibleForPartnerIds(String... visibleForPartnerIds) {
 		return visibleForPartnerIds(Arrays.asList(visibleForPartnerIds));
+	}
+
+	public CrossSaleOfferRequest url(String url) {
+		this.url = url;
+		return this;
 	}
 
 	public CrossSaleOfferRequest metadata(Map<String, String> metadata) {

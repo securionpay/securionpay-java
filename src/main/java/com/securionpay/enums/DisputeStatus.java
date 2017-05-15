@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum DisputeStatus {
 
 	RETRIEVAL_REQUEST_NEW("retrieval_request_new"),
+	RETRIEVAL_REQUEST_RESPONSE_UNDER_REVIEW("retrieval_request_response_under_review"),
 	RETRIEVAL_REQUEST_REPRESENTED("retrieval_request_represented"),
 	
 	CHARGEBACK_NEW("chargeback_new"),
+	CHARGEBACK_RESPONSE_UNDER_REVIEW("chargeback_response_under_review"),
 	CHARGEBACK_REPRESENTED_SUCCESSFULLY("chargeback_represented_successfully"),
 	CHARGEBACK_REPRESENTED_UNSUCCESSFULLY("chargeback_represented_unsuccessfully"),
 	
