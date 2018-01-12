@@ -26,9 +26,6 @@ import com.securionpay.response.Charge;
 import com.securionpay.response.Credit;
 import com.securionpay.response.CrossSaleOffer;
 import com.securionpay.response.Customer;
-import com.securionpay.response.CustomerRecord;
-import com.securionpay.response.CustomerRecordFee;
-import com.securionpay.response.CustomerRecordProfit;
 import com.securionpay.response.DeleteResponse;
 import com.securionpay.response.Dispute;
 import com.securionpay.response.ErrorResponse;
@@ -56,9 +53,6 @@ public class SecurionPayGateway implements Closeable {
 	private static final String EVENTS_PATH = "/events";
 	private static final String BLACKLIST_RULE_PATH = "/blacklist";
 	private static final String CROSS_SALE_OFFER_PATH = "/cross-sale-offers";
-	private static final String CUSTOMER_RECORDS_PATH = "/customer-records";
-	private static final String CUSTOMER_RECORD_FEES_PATH = "/customer-records/%s/fees";
-	private static final String CUSTOMER_RECORD_PROFITS_PATH = "/customer-records/%s/profits";
 	private static final String CREDIT_PATH = "/credits";
 	private static final String FILES_PATH = "/files";
 	private static final String DISPUTES_PATH = "/disputes";
@@ -273,53 +267,6 @@ public class SecurionPayGateway implements Closeable {
 
 	public ListResponse<CrossSaleOffer> listCrossSaleOffers(CrossSaleOfferListRequest request) {
 		return list(CROSS_SALE_OFFER_PATH, request, CrossSaleOffer.class);
-	}
-
-	public CustomerRecord createCustomerRecord(CustomerRecordRequest request) {
-		return post(CUSTOMER_RECORDS_PATH, request, CustomerRecord.class);
-	}
-
-	public CustomerRecord refreshCustomerRecord(CustomerRecordRefreshRequest request) {
-		return post(CUSTOMER_RECORDS_PATH + "/" + request.getCustomerRecordId(), request, CustomerRecord.class);
-	}
-
-	public CustomerRecord retrieveCustomerRecord(String customerRecordId) {
-		return get(CUSTOMER_RECORDS_PATH + "/" + customerRecordId, CustomerRecord.class);
-	}
-
-	public ListResponse<CustomerRecord> listCustomerRecords() {
-		return list(CUSTOMER_RECORDS_PATH, CustomerRecord.class);
-	}
-
-	public ListResponse<CustomerRecord> listCustomerRecords(CustomerRecordListRequest request) {
-		return list(CUSTOMER_RECORDS_PATH, request, CustomerRecord.class);
-	}
-
-	public CustomerRecordFee retrieveCustomerRecordFee(String customerRecordId, String customerRecordFeeId) {
-		return get(format(CUSTOMER_RECORD_FEES_PATH, customerRecordId) + "/" + customerRecordFeeId,
-				CustomerRecordFee.class);
-	}
-
-	public ListResponse<CustomerRecordFee> listCustomerRecordFees(String customerRecordId) {
-		return list(format(CUSTOMER_RECORD_FEES_PATH, customerRecordId), CustomerRecordFee.class);
-	}
-
-	public ListResponse<CustomerRecordFee> listCustomerRecordFees(CustomerRecordFeeListRequest request) {
-		return list(format(CUSTOMER_RECORD_FEES_PATH, request.getCustomerRecordId()), request, CustomerRecordFee.class);
-	}
-
-	public CustomerRecordProfit retrieveCustomerRecordProfit(String customerRecordId, String customerRecordProfitId) {
-		return get(format(CUSTOMER_RECORD_PROFITS_PATH, customerRecordId) + "/" + customerRecordProfitId,
-				CustomerRecordProfit.class);
-	}
-
-	public ListResponse<CustomerRecordProfit> listCustomerRecordProfits(String customerRecordId) {
-		return list(format(CUSTOMER_RECORD_PROFITS_PATH, customerRecordId), CustomerRecordProfit.class);
-	}
-
-	public ListResponse<CustomerRecordProfit> listCustomerRecordProfits(CustomerRecordProfitListRequest request) {
-		return list(format(CUSTOMER_RECORD_PROFITS_PATH, request.getCustomerRecordId()), request,
-				CustomerRecordProfit.class);
 	}
 
 	public Credit createCredit(CreditRequest request) {

@@ -8,7 +8,7 @@ public enum CardBrand {
 	VISA("Visa"),
 	AMERICAN_EXPRESS("American Express"),
 	MASTERCARD("MasterCard"),
-	MASTER("MasterCard"),
+	MAESTRO("Maestro"),
 	DISCOVER("Discover"),
 	JCB("JCB"),
 	DINERS_CLUB("Diners Club"),

@@ -176,6 +176,7 @@ public class Charge {
 		private String chargeId;
 		private Integer amount;
 		private String currency;
+		private String subscriptionId;
 
 		@JsonIgnore
 		private Map<String, Object> other = new HashMap<String, Object>();
@@ -190,6 +191,10 @@ public class Charge {
 
 		public String getChargeId() {
 			return chargeId;
+		}
+
+		public String getSubscriptionId() {
+			return subscriptionId;
 		}
 
 		public Integer getAmount() {

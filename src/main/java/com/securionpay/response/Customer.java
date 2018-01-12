@@ -20,7 +20,6 @@ public class Customer {
 	private String description;
 	private String defaultCardId;
 	private List<Card> cards;
-	private CustomerRecord customerRecord;
 	private Map<String, String> metadata;
 
 	@JsonIgnore
@@ -68,10 +67,6 @@ public class Customer {
 		return cards;
 	}
 
-	public CustomerRecord getCustomerRecord() {
-		return customerRecord;
-	}
-
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
@@ -83,18 +78,5 @@ public class Customer {
 	@JsonAnySetter
 	private void set(String name, Object value) {
 		other.put(name, value);
-	}
-
-	public static class CustomerRecord {
-		private String id;
-		private boolean found;
-
-		public String getId() {
-			return id;
-		}
-
-		public boolean isFound() {
-			return found;
-		}
 	}
 }
