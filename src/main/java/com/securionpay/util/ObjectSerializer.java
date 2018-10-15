@@ -26,7 +26,7 @@ public class ObjectSerializer {
 	public ObjectSerializer() {
 		objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		objectMapper.setVisibilityChecker(objectMapper.getSerializationConfig().getDefaultVisibilityChecker()
+		objectMapper.setVisibility(objectMapper.getSerializationConfig().getDefaultVisibilityChecker()
 				.withFieldVisibility(Visibility.ANY)
 				.withGetterVisibility(Visibility.NONE)
 				.withSetterVisibility(Visibility.NONE)
