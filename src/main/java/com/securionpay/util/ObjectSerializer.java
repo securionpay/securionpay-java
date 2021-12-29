@@ -1,21 +1,22 @@
 package com.securionpay.util;
 
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
-import org.apache.http.client.utils.URIBuilder;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.databind.node.ValueNode;
 import com.securionpay.exception.MappingException;
 import com.securionpay.response.ListResponse;
+import org.apache.http.client.utils.URIBuilder;
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class ObjectSerializer {
 
@@ -62,12 +63,12 @@ public class ObjectSerializer {
 	public String serializeToQueryString(Object request) {
 		ObjectNode node = objectMapper.valueToTree(request);
 
-		if (node instanceof ObjectNode == false) {
+		if (node == null) {
 			return "";
 		}
 
 		URIBuilder url = new URIBuilder();
-		buildQueryString(url, null, (ObjectNode) node);
+		buildQueryString(url, null, node);
 		return url.toString();
 	}
 
@@ -86,6 +87,14 @@ public class ObjectSerializer {
 
 				if (!valueNode.isNull()) {
 					url.addParameter(getPath(path, fieldName), valueNode.asText());
+				}
+			} else if (childNode instanceof ArrayNode) {
+				ArrayNode arrayNode = (ArrayNode) childNode;
+
+				for (JsonNode jsonNode : arrayNode) {
+					if (jsonNode instanceof TextNode) {
+						url.addParameter(getPath(path, fieldName) + "[]", jsonNode.asText());
+					}
 				}
 			}
 		}

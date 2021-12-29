@@ -17,7 +17,7 @@ public class CaptureRequest {
 	private String chargeId;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public CaptureRequest() {
 	}

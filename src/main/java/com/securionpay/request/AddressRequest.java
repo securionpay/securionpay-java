@@ -16,7 +16,7 @@ public class AddressRequest {
 	private String country;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public AddressRequest() {
 	}
@@ -26,6 +26,7 @@ public class AddressRequest {
 		this.line2 = line2;
 		this.zip = zip;
 		this.city = city;
+		this.state = state;
 		this.country = country;
 	}
 

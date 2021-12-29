@@ -15,6 +15,7 @@ public class Charge {
 	private String id;
 	private Long created;
 	private Integer amount;
+	private Integer amountRefunded;
 	private String currency;
 	private String description;
 	private Card card;
@@ -41,7 +42,7 @@ public class Charge {
 	private String failureMessage;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getId() {
 		return id;
@@ -53,6 +54,10 @@ public class Charge {
 
 	public Integer getAmount() {
 		return amount;
+	}
+
+	public Integer getAmountRefunded() {
+		return amountRefunded;
 	}
 
 	public String getCurrency() {
@@ -149,7 +154,7 @@ public class Charge {
 		private String partnerId;
 
 		@JsonIgnore
-		private Map<String, Object> other = new HashMap<String, Object>();
+		private final Map<String, Object> other = new HashMap<>();
 
 		public String getOfferId() {
 			return offerId;
@@ -179,7 +184,7 @@ public class Charge {
 		private String subscriptionId;
 
 		@JsonIgnore
-		private Map<String, Object> other = new HashMap<String, Object>();
+		private final Map<String, Object> other = new HashMap<>();
 
 		public String getOfferId() {
 			return offerId;

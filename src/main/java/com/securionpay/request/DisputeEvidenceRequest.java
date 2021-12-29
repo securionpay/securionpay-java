@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class DisputeEvidenceRequest {
 	private String productDescription;
+	private String customerName;
 	private String customerEmail;
 	private String customerPurchaseIp;
 	private String customerSignature;
@@ -43,10 +44,14 @@ public class DisputeEvidenceRequest {
 	private String uncategorizedFile;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getProductDescription() {
 		return productDescription;
+	}
+
+	public String getCustomerName() {
+		return customerName;
 	}
 
 	public String getCustomerEmail() {
@@ -151,6 +156,11 @@ public class DisputeEvidenceRequest {
 
 	public DisputeEvidenceRequest productDescription(String productDescription) {
 		this.productDescription = productDescription;
+		return this;
+	}
+
+	public DisputeEvidenceRequest customerName(String customerName) {
+		this.customerName = customerName;
 		return this;
 	}
 

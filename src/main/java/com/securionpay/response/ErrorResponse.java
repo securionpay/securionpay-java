@@ -35,6 +35,14 @@ public class ErrorResponse {
 		return error.getBlacklistRuleId();
 	}
 
+	public String getAlertRuleId() {
+		return error.getAlertRuleId();
+	}
+
+	public String getAlertId() {
+		return error.getAlertId();
+	}
+
 	public static class ErrorData {
 
 		private String message;
@@ -44,6 +52,8 @@ public class ErrorResponse {
 		private String chargeId;
 		private String creditId;
 		private String blacklistRuleId;
+		private String alertRuleId;
+		private String alertId;
 
 		public String getMessage() {
 			return message;
@@ -71,6 +81,14 @@ public class ErrorResponse {
 
 		public String getBlacklistRuleId() {
 			return blacklistRuleId;
+		}
+
+		public String getAlertRuleId() {
+			return alertRuleId;
+		}
+
+		public String getAlertId() {
+			return alertId;
 		}
 	}
 }

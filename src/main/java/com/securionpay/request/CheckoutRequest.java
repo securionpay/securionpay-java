@@ -1,16 +1,18 @@
 package com.securionpay.request;
 
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.securionpay.response.Customer;
+import com.securionpay.response.Plan;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @JsonInclude(NON_NULL)
 public class CheckoutRequest {
@@ -27,7 +29,7 @@ public class CheckoutRequest {
 	private String termsAndConditionsUrl;
 	
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public CheckoutRequest() {
 	}
@@ -100,6 +102,10 @@ public class CheckoutRequest {
 		return this;
 	}
 
+	public CheckoutRequest customer(Customer customer) {
+		return customerId(customer.getId());
+	}
+
 	public CheckoutRequest crossSaleOfferIds(String... crossSaleOfferIds) {
 		return crossSaleOfferIds(Arrays.asList(crossSaleOfferIds));
 	}
@@ -144,7 +150,7 @@ public class CheckoutRequest {
 		private Map<String, String> metadata;
 
 		@JsonIgnore
-		private Map<String, Object> other = new HashMap<String, Object>();
+		private final Map<String, Object> other = new HashMap<>();
 
 		public Charge() {
 		}
@@ -210,7 +216,7 @@ public class CheckoutRequest {
 		private Map<String, String> metadata;
 
 		@JsonIgnore
-		private Map<String, Object> other = new HashMap<String, Object>();
+		private final Map<String, Object> other = new HashMap<>();
 
 		public Subscription() {
 		}
@@ -234,6 +240,10 @@ public class CheckoutRequest {
 		public Subscription planId(String planId) {
 			this.planId = planId;
 			return this;
+		}
+
+		public Subscription plan(Plan plan) {
+			return planId(plan.getId());
 		}
 
 		public Subscription captureCharges(Boolean captureCharges) {
@@ -269,7 +279,7 @@ public class CheckoutRequest {
 		private Map<String, String> metadata;
 
 		@JsonIgnore
-		private Map<String, Object> other = new HashMap<String, Object>();
+		private final Map<String, Object> other = new HashMap<>();
 
 		public CustomCharge() {
 		}
@@ -372,7 +382,7 @@ public class CheckoutRequest {
 		}
 
 		@JsonIgnore
-		private Map<String, Object> other = new HashMap<String, Object>();
+		private final Map<String, Object> other = new HashMap<>();
 
 		@JsonAnyGetter
 		private Map<String, Object> getOtherMap() {
@@ -393,7 +403,7 @@ public class CheckoutRequest {
 		private Boolean requireSuccessfulLiabilityShiftForEnrolledCard;
 
 		@JsonIgnore
-		private Map<String, Object> other = new HashMap<>();
+		private final Map<String, Object> other = new HashMap<>();
 
 		public Boolean getEnable() {
 			return enable;

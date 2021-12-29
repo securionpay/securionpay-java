@@ -40,7 +40,7 @@ public class Token {
 	private ThreeDSecureInfo threeDSecureInfo;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getId() {
 		return id;

@@ -16,7 +16,7 @@ public class DisputeListRequest {
 	private Boolean includeTotalCount;
 	private CreatedFilter created;
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public DisputeListRequest() {
 	}

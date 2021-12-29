@@ -14,8 +14,11 @@ public class SecurionPayException extends RuntimeException {
 	private final String chargeId;
 	private final String creditId;
 	private final String blacklistRuleId;
+	private final String alertRuleId;
+	private final String alertId;
 
-	public SecurionPayException(String message, ErrorType type, ErrorCode code, String issuerDeclineCode, String chargeId, String creditId, String blacklistRuleId) {
+	public SecurionPayException(String message, ErrorType type, ErrorCode code, String issuerDeclineCode,
+				String chargeId, String creditId, String blacklistRuleId, String alertRuleId, String alertId) {
 		super(message);
 
 		this.type = type;
@@ -24,10 +27,13 @@ public class SecurionPayException extends RuntimeException {
 		this.chargeId = chargeId;
 		this.creditId = creditId;
 		this.blacklistRuleId = blacklistRuleId;
+		this.alertRuleId = alertRuleId;
+		this.alertId = alertId;
 	}
 
 	public SecurionPayException(ErrorResponse error) {
-		this(error.getMessage(), error.getType(), error.getCode(), error.getIssuerDeclineCode(), error.getChargeId(), error.getCreditId(), error.getBlacklistRuleId());
+		this(error.getMessage(), error.getType(), error.getCode(), error.getIssuerDeclineCode(), error.getChargeId(),
+				error.getCreditId(), error.getBlacklistRuleId(), error.getAlertRuleId(), error.getAlertId());
 	}
 
 	public ErrorType getType() {
@@ -52,5 +58,13 @@ public class SecurionPayException extends RuntimeException {
 
 	public String getBlacklistRuleId() {
 		return blacklistRuleId;
+	}
+
+	public String getAlertRuleId() {
+		return alertRuleId;
+	}
+
+	public String getAlertId() {
+		return alertId;
 	}
 }

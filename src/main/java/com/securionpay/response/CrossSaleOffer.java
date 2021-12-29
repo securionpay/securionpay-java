@@ -38,7 +38,7 @@ public class CrossSaleOffer {
 	private Map<String, String> metadata;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getId() {
 		return id;
@@ -124,7 +124,7 @@ public class CrossSaleOffer {
 		private Boolean capture;
 
 		@JsonIgnore
-		private Map<String, Object> other = new HashMap<String, Object>();
+		private final Map<String, Object> other = new HashMap<>();
 
 		public Integer getAmount() {
 			return amount;
@@ -154,7 +154,7 @@ public class CrossSaleOffer {
 		private Boolean captureCharges;
 
 		@JsonIgnore
-		private Map<String, Object> other = new HashMap<String, Object>();
+		private final Map<String, Object> other = new HashMap<>();
 
 		public String getPlanId() {
 			return planId;

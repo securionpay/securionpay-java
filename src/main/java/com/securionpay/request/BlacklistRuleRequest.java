@@ -1,14 +1,14 @@
 package com.securionpay.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.securionpay.enums.BlacklistRuleType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @JsonInclude(Include.NON_NULL)
 public class BlacklistRuleRequest {
@@ -24,9 +24,12 @@ public class BlacklistRuleRequest {
 	private String email;
 	private String userAgent;
 	private String acceptLanguage;
+	private String cardCountry;
+	private String cardBin;
+	private String cardIssuer;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public BlacklistRuleRequest() {
 	}
@@ -73,6 +76,18 @@ public class BlacklistRuleRequest {
 
 	public String getAcceptLanguage() {
 		return acceptLanguage;
+	}
+
+	public String getCardCountry() {
+		return cardCountry;
+	}
+
+	public String getCardBin() {
+		return cardBin;
+	}
+
+	public String getCardIssuer() {
+		return cardIssuer;
 	}
 
 	public BlacklistRuleRequest ruleType(BlacklistRuleType ruleType) {
@@ -122,6 +137,21 @@ public class BlacklistRuleRequest {
 
 	public BlacklistRuleRequest acceptLanguage(String acceptLanguage) {
 		this.acceptLanguage = acceptLanguage;
+		return this;
+	}
+
+	public BlacklistRuleRequest cardCountry(String cardCountry) {
+		this.cardCountry = cardCountry;
+		return this;
+	}
+
+	public BlacklistRuleRequest cardBin(String cardBin) {
+		this.cardBin = cardBin;
+		return this;
+	}
+
+	public BlacklistRuleRequest cardIssuer(String cardIssuer) {
+		this.cardIssuer = cardIssuer;
 		return this;
 	}
 

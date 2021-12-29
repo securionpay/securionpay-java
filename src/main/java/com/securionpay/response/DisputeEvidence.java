@@ -1,13 +1,16 @@
 package com.securionpay.response;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
+
 public class DisputeEvidence {
 	private String productDescription;
+	private String customerName;
 	private String customerEmail;
 	private String customerPurchaseIp;
 	private String customerSignature;
@@ -42,10 +45,14 @@ public class DisputeEvidence {
 	private String uncategorizedFile;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getProductDescription() {
 		return productDescription;
+	}
+
+	public String getCustomerName() {
+		return customerName;
 	}
 
 	public String getCustomerEmail() {
@@ -146,6 +153,10 @@ public class DisputeEvidence {
 
 	public String getUncategorizedFile() {
 		return uncategorizedFile;
+	}
+
+	public String get(String name) {
+		return toStringNullSafe(other.get(name));
 	}
 
 	@JsonAnySetter

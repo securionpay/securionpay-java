@@ -22,7 +22,7 @@ public class PlanListRequest {
 	private Boolean deleted;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public Integer getLimit() {
 		return limit;

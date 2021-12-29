@@ -8,6 +8,7 @@ public enum ErrorType {
 	INVALID_REQUEST("invalid_request"),
 	CARD_ERROR("card_error"),
 	GATEWAY_ERROR("gateway_error"),
+	RATE_LIMIT_ERROR("rate_limit_error"),
 
 	/**
 	 * Used when received value can't be mapped to this enumeration.
@@ -16,7 +17,7 @@ public enum ErrorType {
 
 	private final String value;
 
-	private ErrorType(String value) {
+	ErrorType(String value) {
 		this.value = value;
 	}
 

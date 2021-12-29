@@ -17,7 +17,7 @@ public class Address {
 	private String country;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getLine1() {
 		return line1;

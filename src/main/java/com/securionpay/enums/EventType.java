@@ -41,6 +41,9 @@ public enum EventType {
 	CREDIT_FAILED("CREDIT_FAILED"),
 	CREDIT_UPDATED("CREDIT_UPDATED"),
 
+	FRAUD_WARNING_CREATED("FRAUD_WARNING_CREATED"),
+	FRAUD_WARNING_UPDATED("FRAUD_WARNING_UPDATED"),
+
 	/**
 	 * Used when received value can't be mapped to this enumeration.
 	 */

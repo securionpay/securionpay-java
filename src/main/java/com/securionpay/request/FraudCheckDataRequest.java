@@ -1,27 +1,32 @@
 package com.securionpay.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @JsonInclude(Include.NON_NULL)
 public class FraudCheckDataRequest {
 
 	private String ipAddress;
+	private String ipCountry;
 	private String email;
 	private String userAgent;
 	private String acceptLanguage;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getIpAddress() {
 		return ipAddress;
+	}
+
+	public String getIpCountry() {
+		return ipCountry;
 	}
 
 	public String getEmail() {
@@ -38,6 +43,11 @@ public class FraudCheckDataRequest {
 
 	public FraudCheckDataRequest ipAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
+		return this;
+	}
+
+	public FraudCheckDataRequest ipCountry(String ipCountry) {
+		this.ipCountry = ipCountry;
 		return this;
 	}
 

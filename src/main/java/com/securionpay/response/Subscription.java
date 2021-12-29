@@ -1,13 +1,13 @@
 package com.securionpay.response;
 
-import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.securionpay.enums.SubscriptionStatus;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.securionpay.enums.SubscriptionStatus;
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
 public class Subscription {
 
@@ -32,10 +32,11 @@ public class Subscription {
 	private Shipping shipping;
 	private Billing billing;
 	private ThreeDSecureInfo threeDSecureInfo;
+	private Charge.FromCrossSale fromCrossSale;
 	private Map<String, String> metadata;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getId() {
 		return id;
@@ -115,6 +116,10 @@ public class Subscription {
 
 	public ThreeDSecureInfo getThreeDSecureInfo() {
 		return threeDSecureInfo;
+	}
+
+	public Charge.FromCrossSale getFromCrossSale() {
+		return fromCrossSale;
 	}
 
 	public Map<String, String> getMetadata() {

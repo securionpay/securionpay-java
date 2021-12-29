@@ -1,14 +1,14 @@
 package com.securionpay.response;
 
-import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.securionpay.enums.CardBrand;
 import com.securionpay.enums.CardType;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
 public class Card {
 
@@ -27,6 +27,8 @@ public class Card {
 	private String customerId;
 	private CardBrand brand;
 	private CardType type;
+	
+	private String country;
 
 	private String addressLine1;
 	private String addressLine2;
@@ -36,9 +38,10 @@ public class Card {
 	private String addressCountry;
 
 	private FraudCheckData fraudCheckData;
+	private String issuer;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getId() {
 		return id;
@@ -88,6 +91,10 @@ public class Card {
 		return type;
 	}
 
+	public String getCountry() {
+		return country;
+	}
+
 	public String getAddressLine1() {
 		return addressLine1;
 	}
@@ -114,6 +121,10 @@ public class Card {
 
 	public FraudCheckData getFraudCheckData() {
 		return fraudCheckData;
+	}
+
+	public String getIssuer() {
+		return issuer;
 	}
 
 	public String get(String name) {

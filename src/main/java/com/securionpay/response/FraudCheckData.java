@@ -17,7 +17,7 @@ public class FraudCheckData {
 	private String acceptLanguage;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getIpAddress() {
 		return ipAddress;

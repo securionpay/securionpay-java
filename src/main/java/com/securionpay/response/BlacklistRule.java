@@ -18,6 +18,9 @@ public class BlacklistRule {
 	private String email;
 	private String userAgent;
 	private String acceptLanguage;
+	private String cardCountry;
+	private String cardBin;
+	private String cardIssuer;
 
 	public String getId() {
 		return id;
@@ -65,5 +68,17 @@ public class BlacklistRule {
 
 	public String getAcceptLanguage() {
 		return acceptLanguage;
+	}
+
+	public String getCardCountry() {
+		return cardCountry;
+	}
+	
+	public String getCardBin() {
+		return cardBin;
+	}
+
+	public String getCardIssuer() {
+		return cardIssuer;
 	}
 }

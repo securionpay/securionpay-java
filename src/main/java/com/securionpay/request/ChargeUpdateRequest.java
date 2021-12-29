@@ -1,14 +1,15 @@
 package com.securionpay.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.securionpay.response.Charge;
+import com.securionpay.response.Customer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @JsonInclude(Include.NON_NULL)
 public class ChargeUpdateRequest {
@@ -24,7 +25,7 @@ public class ChargeUpdateRequest {
 	private Map<String, String> metadata;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public ChargeUpdateRequest() {
 	}
@@ -82,6 +83,10 @@ public class ChargeUpdateRequest {
 	public ChargeUpdateRequest customerId(String customerId) {
 		this.customerId = customerId;
 		return this;
+	}
+
+	public ChargeUpdateRequest customer(Customer customer) {
+		return customerId(customer.getId());
 	}
 
 	public ChargeUpdateRequest shipping(ShippingRequest shipping) {

@@ -14,9 +14,7 @@ import com.securionpay.response.Plan;
 @JsonInclude(Include.NON_NULL)
 public class SubscriptionRequest {
 
-	@JsonIgnore
 	private String customerId;
-
 	private String planId;
 	private CardRequest card;
 	private Integer quantity;
@@ -27,7 +25,7 @@ public class SubscriptionRequest {
 	private Map<String, String> metadata = new HashMap<>();
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public SubscriptionRequest() {
 	}
