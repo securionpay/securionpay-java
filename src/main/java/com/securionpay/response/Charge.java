@@ -1,14 +1,14 @@
 package com.securionpay.response;
 
-import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.securionpay.enums.ErrorCode;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.securionpay.enums.ErrorCode;
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
 public class Charge {
 
@@ -37,7 +37,7 @@ public class Charge {
 	
 	private Map<String, String> metadata;
 
-	private ErrorCode failureCode;
+	private String failureCode;
 	private String failureIssuerDeclineCode;
 	private String failureMessage;
 
@@ -123,12 +123,16 @@ public class Charge {
 	public Dispute getDispute() {
 		return dispute;
 	}
-	
+
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
 
 	public ErrorCode getFailureCode() {
+		return ErrorCode.fromValue(failureCode);
+	}
+
+	public String getFailureCodeAsString() {
 		return failureCode;
 	}
 

@@ -22,6 +22,9 @@ public enum FileUploadType {
 
 	@JsonCreator
 	public static FileUploadType fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (FileUploadType purpose : values()) {
 			if (purpose.value.equalsIgnoreCase(value)) {
 				return purpose;

@@ -21,12 +21,15 @@ public enum CardBrand {
 
 	private final String value;
 
-	private CardBrand(String value) {
+	CardBrand(String value) {
 		this.value = value;
 	}
 
 	@JsonCreator
 	public static CardBrand fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (CardBrand cardBrand : values()) {
 			if (cardBrand.value.equalsIgnoreCase(value)) {
 				return cardBrand;

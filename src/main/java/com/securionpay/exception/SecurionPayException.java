@@ -8,8 +8,8 @@ public class SecurionPayException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	private final ErrorType type;
-	private final ErrorCode code;
+	private final String type;
+	private final String code;
 	private final String issuerDeclineCode;
 	private final String chargeId;
 	private final String creditId;
@@ -17,8 +17,8 @@ public class SecurionPayException extends RuntimeException {
 	private final String alertRuleId;
 	private final String alertId;
 
-	public SecurionPayException(String message, ErrorType type, ErrorCode code, String issuerDeclineCode,
-				String chargeId, String creditId, String blacklistRuleId, String alertRuleId, String alertId) {
+	public SecurionPayException(String message, String type, String code, String issuerDeclineCode,
+								String chargeId, String creditId, String blacklistRuleId, String alertRuleId, String alertId) {
 		super(message);
 
 		this.type = type;
@@ -32,15 +32,24 @@ public class SecurionPayException extends RuntimeException {
 	}
 
 	public SecurionPayException(ErrorResponse error) {
-		this(error.getMessage(), error.getType(), error.getCode(), error.getIssuerDeclineCode(), error.getChargeId(),
+		this(error.getMessage(), error.getTypeAsString(), error.getCodeAsString(), error.getIssuerDeclineCode(), error.getChargeId(),
 				error.getCreditId(), error.getBlacklistRuleId(), error.getAlertRuleId(), error.getAlertId());
 	}
 
+
 	public ErrorType getType() {
+		return ErrorType.fromValue(type);
+	}
+
+	public String getTypeAsString() {
 		return type;
 	}
 
 	public ErrorCode getCode() {
+		return ErrorCode.fromValue(code);
+	}
+
+	public String getCodeAsString() {
 		return code;
 	}
 

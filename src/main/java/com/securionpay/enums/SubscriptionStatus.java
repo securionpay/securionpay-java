@@ -18,12 +18,15 @@ public enum SubscriptionStatus {
 
 	private final String value;
 
-	private SubscriptionStatus(String value) {
+	SubscriptionStatus(String value) {
 		this.value = value;
 	}
 
 	@JsonCreator
 	public static SubscriptionStatus fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (SubscriptionStatus subscriptionStatus : values()) {
 			if (subscriptionStatus.value.equalsIgnoreCase(value)) {
 				return subscriptionStatus;

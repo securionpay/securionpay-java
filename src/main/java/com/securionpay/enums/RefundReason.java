@@ -20,6 +20,9 @@ public enum RefundReason {
 
 	@JsonCreator
 	public static RefundReason fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (RefundReason interval : values()) {
 			if (interval.value.equalsIgnoreCase(value)) {
 				return interval;

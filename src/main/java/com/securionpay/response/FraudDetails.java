@@ -4,10 +4,14 @@ import com.securionpay.enums.FraudStatus;
 
 public class FraudDetails {
 
-	private FraudStatus status;
+	private String status;
 	private Integer score;
 
 	public FraudStatus getStatus() {
+		return FraudStatus.fromValue(status);
+	}
+
+	public String getStatusAsString() {
 		return status;
 	}
 

@@ -21,6 +21,9 @@ public enum LiabilityShift {
 
 	@JsonCreator
 	public static LiabilityShift fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (LiabilityShift liabilityShift : values()) {
 			if (liabilityShift.value.equalsIgnoreCase(value)) {
 				return liabilityShift;

@@ -36,6 +36,9 @@ public enum ErrorCode {
 
 	@JsonCreator
 	public static ErrorCode fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (ErrorCode errorCode : values()) {
 			if (errorCode.value.equalsIgnoreCase(value)) {
 				return errorCode;

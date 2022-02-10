@@ -19,6 +19,9 @@ public enum AuthenticationFlow {
 
     @JsonCreator
     public static AuthenticationFlow fromValue(String value) {
+        if (value == null) {
+            return null;
+        }
         for (AuthenticationFlow authenticationFlow : values()) {
             if (authenticationFlow.value.equalsIgnoreCase(value)) {
                 return authenticationFlow;

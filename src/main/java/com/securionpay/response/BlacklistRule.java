@@ -1,6 +1,13 @@
 package com.securionpay.response;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.securionpay.enums.BlacklistRuleType;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
 public class BlacklistRule {
 
@@ -8,7 +15,7 @@ public class BlacklistRule {
 	private Long created;
 	private boolean deleted = false;
 
-	private BlacklistRuleType ruleType;
+	private String ruleType;
 
 	private String fingerprint;
 	private String ipAddress;
@@ -35,6 +42,10 @@ public class BlacklistRule {
 	}
 
 	public BlacklistRuleType getRuleType() {
+		return BlacklistRuleType.fromValue(ruleType);
+	}
+
+	public String getRuleTypeAsString() {
 		return ruleType;
 	}
 

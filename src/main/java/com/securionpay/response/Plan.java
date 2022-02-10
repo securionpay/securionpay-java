@@ -1,13 +1,13 @@
 package com.securionpay.response;
 
-import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.securionpay.enums.Interval;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.securionpay.enums.Interval;
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
 public class Plan {
 
@@ -17,7 +17,7 @@ public class Plan {
 
 	private Integer amount;
 	private String currency;
-	private Interval interval;
+	private String interval;
 	private Integer intervalCount;
 	private Integer billingCycles;
 	private String name;
@@ -50,6 +50,10 @@ public class Plan {
 	}
 
 	public Interval getInterval() {
+		return Interval.fromValue(interval);
+	}
+
+	public String getIntervalAsString() {
 		return interval;
 	}
 

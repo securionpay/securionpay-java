@@ -9,7 +9,7 @@ public class Event {
 	private String id;
 	private Long created;
 
-	private EventType type;
+	private String type;
 	@JsonDeserialize(using = EventDataDeserializer.class)
 	private Object data;
 	private String log;
@@ -23,6 +23,10 @@ public class Event {
 	}
 
 	public EventType getType() {
+		return EventType.fromValue(type);
+	}
+
+	public String getTypeAsString() {
 		return type;
 	}
 

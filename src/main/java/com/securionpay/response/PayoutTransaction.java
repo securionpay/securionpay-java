@@ -14,7 +14,7 @@ import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 public class PayoutTransaction {
     private String id;
     private Long created;
-    private PayoutTransactionType type;
+    private String type;
     private Long amount;
     private String currency;
     private String description;
@@ -44,6 +44,10 @@ public class PayoutTransaction {
     }
 
     public PayoutTransactionType getType() {
+        return PayoutTransactionType.fromValue(type);
+    }
+
+    public String getTypeAsString() {
         return type;
     }
 

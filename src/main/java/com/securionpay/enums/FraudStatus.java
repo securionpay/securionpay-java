@@ -18,12 +18,15 @@ public enum FraudStatus {
 
 	private final String value;
 
-	private FraudStatus(String value) {
+	FraudStatus(String value) {
 		this.value = value;
 	}
 
 	@JsonCreator
 	public static FraudStatus fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (FraudStatus fraudStatus : values()) {
 			if (fraudStatus.value.equalsIgnoreCase(value)) {
 				return fraudStatus;

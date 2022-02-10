@@ -15,8 +15,16 @@ public class ErrorResponse {
 		return error.getType();
 	}
 
+	public String getTypeAsString() {
+		return error.getCodeAsString();
+	}
+
 	public ErrorCode getCode() {
 		return error.getCode();
+	}
+
+	public String getCodeAsString() {
+		return error.getCodeAsString();
 	}
 
 	public String getIssuerDeclineCode() {
@@ -46,8 +54,8 @@ public class ErrorResponse {
 	public static class ErrorData {
 
 		private String message;
-		private ErrorType type;
-		private ErrorCode code;
+		private String type;
+		private String code;
 		private String issuerDeclineCode;
 		private String chargeId;
 		private String creditId;
@@ -60,10 +68,18 @@ public class ErrorResponse {
 		}
 
 		public ErrorType getType() {
+			return ErrorType.fromValue(type);
+		}
+
+		public String getTypeAsString() {
 			return type;
 		}
 
 		public ErrorCode getCode() {
+			return ErrorCode.fromValue(code);
+		}
+
+		public String getCodeAsString() {
 			return code;
 		}
 

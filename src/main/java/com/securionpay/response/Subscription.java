@@ -19,7 +19,7 @@ public class Subscription {
 	private String customerId;
 	private Integer quantity;
 	private Boolean captureCharges;
-	private SubscriptionStatus status;
+	private String status;
 	private Integer remainingBillingCycles;
 	private Long start;
 	private Long currentPeriodStart;
@@ -67,6 +67,10 @@ public class Subscription {
 	}
 
 	public SubscriptionStatus getStatus() {
+		return SubscriptionStatus.fromValue(status);
+	}
+
+	public String getStatusAsString() {
 		return status;
 	}
 

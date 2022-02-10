@@ -59,6 +59,9 @@ public enum EventType {
 
 	@JsonCreator
 	public static EventType fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (EventType eventType : values()) {
 			if (eventType.value.equalsIgnoreCase(value)) {
 				return eventType;

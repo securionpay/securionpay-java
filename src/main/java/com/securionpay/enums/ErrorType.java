@@ -23,6 +23,9 @@ public enum ErrorType {
 
 	@JsonCreator
 	public static ErrorType fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (ErrorType errorType : values()) {
 			if (errorType.value.equalsIgnoreCase(value)) {
 				return errorType;

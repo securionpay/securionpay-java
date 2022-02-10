@@ -21,12 +21,15 @@ public enum DisputeReason {
 
 	private final String value;
 
-	private DisputeReason(String value) {
+	DisputeReason(String value) {
 		this.value = value;
 	}
 
 	@JsonCreator
 	public static DisputeReason fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (DisputeReason disputeReason : values()) {
 			if (disputeReason.value.equalsIgnoreCase(value)) {
 				return disputeReason;

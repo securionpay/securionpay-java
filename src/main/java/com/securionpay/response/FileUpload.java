@@ -6,9 +6,9 @@ import com.securionpay.enums.FileUploadType;
 public class FileUpload {
 	private String id;
 	private Long created;
-	private FileUploadPurpose purpose;
+	private String purpose;
 	private Integer size;
-	private FileUploadType type;
+	private String type;
 	private String url;
 
 	public String getId() {
@@ -20,6 +20,10 @@ public class FileUpload {
 	}
 
 	public FileUploadPurpose getPurpose() {
+		return FileUploadPurpose.fromValue(purpose);
+	}
+
+	public String getPurposeAsString() {
 		return purpose;
 	}
 
@@ -28,6 +32,10 @@ public class FileUpload {
 	}
 
 	public FileUploadType getType() {
+		return FileUploadType.fromValue(type);
+	}
+
+	public String getTypeAsString() {
 		return type;
 	}
 

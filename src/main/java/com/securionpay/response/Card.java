@@ -25,9 +25,9 @@ public class Card {
 
 	private String cardholderName;
 	private String customerId;
-	private CardBrand brand;
-	private CardType type;
-	
+	private String brand;
+	private String type;
+
 	private String country;
 
 	private String addressLine1;
@@ -84,10 +84,18 @@ public class Card {
 	}
 
 	public CardBrand getBrand() {
+		return CardBrand.fromValue(brand);
+	}
+
+	public String getBrandAsString() {
 		return brand;
 	}
 
 	public CardType getType() {
+		return CardType.fromValue(type);
+	}
+
+	public String getTypeAsString() {
 		return type;
 	}
 

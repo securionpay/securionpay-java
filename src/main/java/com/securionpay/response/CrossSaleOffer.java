@@ -19,7 +19,7 @@ public class CrossSaleOffer {
 	private Charge charge;
 	private Subscription subscription;
 
-	private CrossSaleOfferTemplate template;
+	private String template;
 	private String title;
 	private String description;
 	private String imageUrl;
@@ -61,6 +61,10 @@ public class CrossSaleOffer {
 	}
 
 	public CrossSaleOfferTemplate getTemplate() {
+		return CrossSaleOfferTemplate.fromValue(template);
+	}
+
+	public String getTemplateAsString() {
 		return template;
 	}
 

@@ -29,6 +29,9 @@ public enum BlacklistRuleType {
 
 	@JsonCreator
 	public static BlacklistRuleType fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (BlacklistRuleType blacklistRuleType : values()) {
 			if (blacklistRuleType.value.equalsIgnoreCase(value)) {
 				return blacklistRuleType;

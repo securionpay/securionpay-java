@@ -27,6 +27,9 @@ public enum PayoutTransactionType {
 
 	@JsonCreator
 	public static PayoutTransactionType fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (PayoutTransactionType payoutStatus : values()) {
 			if (payoutStatus.value.equalsIgnoreCase(value)) {
 				return payoutStatus;
