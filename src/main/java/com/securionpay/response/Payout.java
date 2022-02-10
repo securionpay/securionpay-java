@@ -19,15 +19,6 @@ public class Payout {
     @JsonIgnore
     private Map<String, Object> other = new HashMap<>();
 
-    public String get(String name) {
-        return toStringNullSafe(other.get(name));
-    }
-
-    @JsonAnySetter
-    private void set(String name, Object value) {
-        other.put(name, value);
-    }
-
     public String getId() {
         return id;
     }
@@ -50,5 +41,14 @@ public class Payout {
 
     public Long getPeriodEnd() {
         return periodEnd;
+    }
+
+    public String get(String name) {
+        return toStringNullSafe(other.get(name));
+    }
+
+    @JsonAnySetter
+    private void set(String name, Object value) {
+        other.put(name, value);
     }
 }

@@ -18,6 +18,9 @@ public class ThreeDSecureInfo {
 	private String version;
 	private String authenticationFlow;
 
+	@JsonIgnore
+	private final Map<String, Object> other = new HashMap<>();
+
 	public Integer getAmount() {
 		return amount;
 	}
@@ -48,5 +51,14 @@ public class ThreeDSecureInfo {
 
 	public String getAuthenticationFlowAsString() {
 		return authenticationFlow;
+	}
+
+	public String get(String name) {
+		return toStringNullSafe(other.get(name));
+	}
+
+	@JsonAnySetter
+	private void set(String name, Object value) {
+		other.put(name, value);
 	}
 }

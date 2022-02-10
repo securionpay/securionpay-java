@@ -29,6 +29,9 @@ public class BlacklistRule {
 	private String cardBin;
 	private String cardIssuer;
 
+	@JsonIgnore
+	private final Map<String, Object> other = new HashMap<>();
+
 	public String getId() {
 		return id;
 	}
@@ -91,5 +94,14 @@ public class BlacklistRule {
 
 	public String getCardIssuer() {
 		return cardIssuer;
+	}
+
+	public String get(String name) {
+		return toStringNullSafe(other.get(name));
+	}
+
+	@JsonAnySetter
+	private void set(String name, Object value) {
+		other.put(name, value);
 	}
 }

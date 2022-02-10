@@ -4,6 +4,11 @@ import com.securionpay.enums.ErrorCode;
 import com.securionpay.enums.ErrorType;
 import com.securionpay.response.ErrorResponse;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
+
 public class SecurionPayException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
@@ -16,9 +21,13 @@ public class SecurionPayException extends RuntimeException {
 	private final String blacklistRuleId;
 	private final String alertRuleId;
 	private final String alertId;
+	private final Map<String, Object> other;
 
-	public SecurionPayException(String message, String type, String code, String issuerDeclineCode,
-								String chargeId, String creditId, String blacklistRuleId, String alertRuleId, String alertId) {
+	public SecurionPayException(
+			String message, String type, String code, String issuerDeclineCode,
+			String chargeId, String creditId, String blacklistRuleId, String alertRuleId, String alertId,
+			Map<String, Object> other
+	) {
 		super(message);
 
 		this.type = type;
@@ -29,11 +38,15 @@ public class SecurionPayException extends RuntimeException {
 		this.blacklistRuleId = blacklistRuleId;
 		this.alertRuleId = alertRuleId;
 		this.alertId = alertId;
+		this.other = new HashMap<>(other);
 	}
 
 	public SecurionPayException(ErrorResponse error) {
-		this(error.getMessage(), error.getTypeAsString(), error.getCodeAsString(), error.getIssuerDeclineCode(), error.getChargeId(),
-				error.getCreditId(), error.getBlacklistRuleId(), error.getAlertRuleId(), error.getAlertId());
+		this(
+				error.getMessage(), error.getTypeAsString(), error.getCodeAsString(), error.getIssuerDeclineCode(),
+				error.getChargeId(), error.getCreditId(), error.getBlacklistRuleId(), error.getAlertRuleId(), error.getAlertId(),
+				error.getOther()
+		);
 	}
 
 
@@ -75,5 +88,9 @@ public class SecurionPayException extends RuntimeException {
 
 	public String getAlertId() {
 		return alertId;
+	}
+
+	public String get(String name) {
+		return toStringNullSafe(other.get(name));
 	}
 }

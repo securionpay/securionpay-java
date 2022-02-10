@@ -1,7 +1,14 @@
 package com.securionpay.response;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.securionpay.enums.ErrorCode;
 import com.securionpay.enums.ErrorType;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
 public class ErrorResponse {
 
@@ -51,6 +58,14 @@ public class ErrorResponse {
 		return error.getAlertId();
 	}
 
+	public Map<String, Object> getOther() {
+		return error.getOther();
+	}
+
+	public String get(String name) {
+		return error.get(name);
+	}
+
 	public static class ErrorData {
 
 		private String message;
@@ -62,6 +77,9 @@ public class ErrorResponse {
 		private String blacklistRuleId;
 		private String alertRuleId;
 		private String alertId;
+
+		@JsonIgnore
+		private Map<String, Object> other = new HashMap<>();
 
 		public String getMessage() {
 			return message;
@@ -105,6 +123,19 @@ public class ErrorResponse {
 
 		public String getAlertId() {
 			return alertId;
+		}
+
+		public Map<String, Object> getOther() {
+			return other;
+		}
+
+		public String get(String name) {
+			return toStringNullSafe(other.get(name));
+		}
+
+		@JsonAnySetter
+		private void set(String name, Object value) {
+			other.put(name, value);
 		}
 	}
 }
