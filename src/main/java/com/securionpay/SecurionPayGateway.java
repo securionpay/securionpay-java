@@ -343,6 +343,28 @@ public class SecurionPayGateway implements Closeable {
 		return get(FRAUD_WARNING_PATH + "/" + id, FraudWarning.class);
 	}
 
+	public Payout retrievePayout(String id) {
+		return get("/payouts/" + id, Payout.class);
+	}
+
+	public ListResponse<Payout> listPayouts() {
+		return list("/payouts", Payout.class);
+	}
+
+	public ListResponse<Payout> listPayouts(PayoutListRequest request) {
+		return list("/payouts", request, Payout.class);
+	}
+
+	public ListResponse<PayoutTransaction> listPayoutTransactions(String payoutId) {
+		PayoutTransactionListRequest request = new PayoutTransactionListRequest();
+		request.setPayout(payoutId);
+		return list("/payout-transactions", request, PayoutTransaction.class);
+	}
+
+	public ListResponse<PayoutTransaction> listPayoutTransactions(PayoutTransactionListRequest request) {
+		return list("/payout-transactions", request, PayoutTransaction.class);
+	}
+
 	@Override
 	public void close() throws IOException {
 		if (connection != null) {
