@@ -1,8 +1,5 @@
 package com.securionpay.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,24 +7,25 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.securionpay.response.Subscription;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @JsonInclude(Include.NON_NULL)
 public class SubscriptionCancelRequest {
 
 	@JsonIgnore
 	private String subscriptionId;
-	@JsonIgnore
-	private String customerId;
 
 	private Boolean atPeriodEnd;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public SubscriptionCancelRequest() {
 	}
 
-	public SubscriptionCancelRequest(String subscriptionId, String customerId) {
-		subscriptionId(subscriptionId).customerId(customerId);
+	public SubscriptionCancelRequest(String subscriptionId) {
+		subscriptionId(subscriptionId);
 	}
 
 	public SubscriptionCancelRequest(Subscription subscription) {
@@ -36,10 +34,6 @@ public class SubscriptionCancelRequest {
 
 	public String getSubscriptionId() {
 		return subscriptionId;
-	}
-
-	public String getCustomerId() {
-		return customerId;
 	}
 
 	public Boolean getAtPeriodEnd() {
@@ -51,13 +45,8 @@ public class SubscriptionCancelRequest {
 		return this;
 	}
 
-	public SubscriptionCancelRequest customerId(String customerId) {
-		this.customerId = customerId;
-		return this;
-	}
-
 	public SubscriptionCancelRequest subscription(Subscription subscription) {
-		return subscriptionId(subscription.getId()).customerId(subscription.getCustomerId());
+		return subscriptionId(subscription.getId());
 	}
 
 	public SubscriptionCancelRequest atPeriodEnd(Boolean atPeriodEnd) {

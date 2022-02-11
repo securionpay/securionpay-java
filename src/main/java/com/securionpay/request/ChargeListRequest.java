@@ -23,7 +23,7 @@ public class ChargeListRequest {
 	private String customerId;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public Integer getLimit() {
 		return limit;

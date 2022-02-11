@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.securionpay.response.Card;
 import com.securionpay.response.Customer;
 
 @JsonInclude(Include.NON_NULL)
@@ -23,7 +24,7 @@ public class CustomerUpdateRequest {
 	private Map<String, String> metadata;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public CustomerUpdateRequest() {
 	}
@@ -82,6 +83,10 @@ public class CustomerUpdateRequest {
 	public CustomerUpdateRequest defaultCardId(String defaultCardId) {
 		this.defaultCardId = defaultCardId;
 		return this;
+	}
+
+	public CustomerUpdateRequest defaultCard(Card defaultCard) {
+		return defaultCardId(defaultCard.getId());
 	}
 
 	public CustomerUpdateRequest card(CardRequest card) {

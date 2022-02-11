@@ -14,7 +14,7 @@ public class Billing {
 	private String vat;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getName() {
 		return name;

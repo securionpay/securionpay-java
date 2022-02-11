@@ -18,12 +18,15 @@ public enum Interval {
 
 	private final String value;
 
-	private Interval(String value) {
+	Interval(String value) {
 		this.value = value;
 	}
 
 	@JsonCreator
 	public static Interval fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (Interval interval : values()) {
 			if (interval.value.equalsIgnoreCase(value)) {
 				return interval;

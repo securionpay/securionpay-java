@@ -1,20 +1,21 @@
 package com.securionpay.response;
 
-import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.securionpay.enums.ErrorCode;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.securionpay.enums.ErrorCode;
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
 public class Charge {
 
 	private String id;
 	private Long created;
 	private Integer amount;
+	private Integer amountRefunded;
 	private String currency;
 	private String description;
 	private Card card;
@@ -36,12 +37,12 @@ public class Charge {
 	
 	private Map<String, String> metadata;
 
-	private ErrorCode failureCode;
+	private String failureCode;
 	private String failureIssuerDeclineCode;
 	private String failureMessage;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getId() {
 		return id;
@@ -53,6 +54,10 @@ public class Charge {
 
 	public Integer getAmount() {
 		return amount;
+	}
+
+	public Integer getAmountRefunded() {
+		return amountRefunded;
 	}
 
 	public String getCurrency() {
@@ -118,12 +123,16 @@ public class Charge {
 	public Dispute getDispute() {
 		return dispute;
 	}
-	
+
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
 
 	public ErrorCode getFailureCode() {
+		return ErrorCode.fromValue(failureCode);
+	}
+
+	public String getFailureCodeAsString() {
 		return failureCode;
 	}
 
@@ -149,7 +158,7 @@ public class Charge {
 		private String partnerId;
 
 		@JsonIgnore
-		private Map<String, Object> other = new HashMap<String, Object>();
+		private final Map<String, Object> other = new HashMap<>();
 
 		public String getOfferId() {
 			return offerId;
@@ -179,7 +188,7 @@ public class Charge {
 		private String subscriptionId;
 
 		@JsonIgnore
-		private Map<String, Object> other = new HashMap<String, Object>();
+		private final Map<String, Object> other = new HashMap<>();
 
 		public String getOfferId() {
 			return offerId;

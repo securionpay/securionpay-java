@@ -1,15 +1,16 @@
 package com.securionpay.request;
 
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.securionpay.response.Credit;
+import com.securionpay.response.Customer;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @JsonInclude(NON_NULL)
 public class CreditListRequest {
@@ -20,8 +21,10 @@ public class CreditListRequest {
 
 	private CreatedFilter created;
 
+	private String customerId;
+
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public Integer getLimit() {
 		return limit;
@@ -41,6 +44,10 @@ public class CreditListRequest {
 
 	public CreatedFilter getCreated() {
 		return created;
+	}
+
+	public String getCustomerId() {
+		return customerId;
 	}
 
 	public CreditListRequest limit(Integer limit) {
@@ -79,6 +86,16 @@ public class CreditListRequest {
 		this.created = created;
 		return this;
 	}
+
+	public CreditListRequest customerId(String customerId) {
+		this.customerId = customerId;
+		return this;
+	}
+
+	public CreditListRequest customer(Customer customer) {
+		return customerId(customer.getId());
+	}
+
 
 	@JsonAnyGetter
 	private Map<String, Object> getOtherMap() {

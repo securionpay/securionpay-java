@@ -13,7 +13,7 @@ public class BillingRequest {
 	private String vat;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public BillingRequest() {
 	}

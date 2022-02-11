@@ -1,12 +1,13 @@
 package com.securionpay.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.securionpay.enums.FileUploadPurpose;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FileUploadListRequest {
@@ -15,8 +16,10 @@ public class FileUploadListRequest {
 	private String endingBeforeId;
 	private Boolean includeTotalCount;
 	private CreatedFilter created;
+	private FileUploadPurpose purpose;
+
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public FileUploadListRequest() {
 	}
@@ -39,6 +42,10 @@ public class FileUploadListRequest {
 
 	public CreatedFilter getCreated() {
 		return this.created;
+	}
+
+	public FileUploadPurpose getPurpose() {
+		return purpose;
 	}
 
 	public FileUploadListRequest limit(Integer limit) {
@@ -70,6 +77,11 @@ public class FileUploadListRequest {
 		return this;
 	}
 
+	public FileUploadListRequest purpose(FileUploadPurpose purpose) {
+		this.purpose = purpose;
+		return this;
+	}
+
 	@JsonAnyGetter
 	private Map<String, Object> getOtherMap() {
 		return this.other;
@@ -80,4 +92,5 @@ public class FileUploadListRequest {
 		this.other.put(name, value);
 		return this;
 	}
+
 }

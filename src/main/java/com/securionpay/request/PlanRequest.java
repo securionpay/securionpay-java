@@ -19,13 +19,12 @@ public class PlanRequest {
 	private Integer intervalCount;
 	private String name;
 	private Integer trialPeriodDays;
-	private String statementDescription;
 	private Map<String, String> metadata;
 	private Integer billingCycles;
 	private String recursTo;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public PlanRequest() {
 	}
@@ -56,10 +55,6 @@ public class PlanRequest {
 
 	public Integer getTrialPeriodDays() {
 		return trialPeriodDays;
-	}
-
-	public String getStatementDescription() {
-		return statementDescription;
 	}
 
 	public Map<String, String> getMetadata() {
@@ -101,11 +96,6 @@ public class PlanRequest {
 
 	public PlanRequest trialPeriodDays(Integer trialPeriodDays) {
 		this.trialPeriodDays = trialPeriodDays;
-		return this;
-	}
-
-	public PlanRequest statementDescription(String statementDescription) {
-		this.statementDescription = statementDescription;
 		return this;
 	}
 

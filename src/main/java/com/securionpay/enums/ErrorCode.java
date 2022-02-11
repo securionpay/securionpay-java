@@ -18,8 +18,10 @@ public enum ErrorCode {
 	CARD_DECLINED("card_declined"),
 	PROCESSING_ERROR("processing_error"),
 	BLACKLISTED("blacklisted"),
+	BLOCKED("blocked"),
 	EXPIRED_TOKEN("expired_token"),
 	LIMIT_EXCEEDED("limit_exceeded"),
+	AUTHENTICATION_REQUIRED("authentication_required"),
 
 	/**
 	 * Used when received value can't be mapped to this enumeration.
@@ -34,6 +36,9 @@ public enum ErrorCode {
 
 	@JsonCreator
 	public static ErrorCode fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (ErrorCode errorCode : values()) {
 			if (errorCode.value.equalsIgnoreCase(value)) {
 				return errorCode;

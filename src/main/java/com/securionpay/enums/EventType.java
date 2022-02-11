@@ -41,6 +41,11 @@ public enum EventType {
 	CREDIT_FAILED("CREDIT_FAILED"),
 	CREDIT_UPDATED("CREDIT_UPDATED"),
 
+	FRAUD_WARNING_CREATED("FRAUD_WARNING_CREATED"),
+	FRAUD_WARNING_UPDATED("FRAUD_WARNING_UPDATED"),
+
+	PAYOUT_CREATED("PAYOUT_CREATED"),
+	PAYOUT_UPDATED("PAYOUT_UPDATED"),
 	/**
 	 * Used when received value can't be mapped to this enumeration.
 	 */
@@ -54,6 +59,9 @@ public enum EventType {
 
 	@JsonCreator
 	public static EventType fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (EventType eventType : values()) {
 			if (eventType.value.equalsIgnoreCase(value)) {
 				return eventType;

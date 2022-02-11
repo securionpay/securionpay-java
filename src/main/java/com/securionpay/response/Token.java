@@ -1,14 +1,14 @@
 package com.securionpay.response;
 
-import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.securionpay.enums.CardBrand;
 import com.securionpay.enums.CardType;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
 public class Token {
 
@@ -22,8 +22,8 @@ public class Token {
 	private String expMonth;
 	private String expYear;
 
-	private CardBrand brand;
-	private CardType type;
+	private String brand;
+	private String type;
 
 	private String cardholderName;
 	private Boolean used;
@@ -40,7 +40,7 @@ public class Token {
 	private ThreeDSecureInfo threeDSecureInfo;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getId() {
 		return id;
@@ -71,10 +71,18 @@ public class Token {
 	}
 
 	public CardBrand getBrand() {
+		return CardBrand.fromValue(brand);
+	}
+
+	public String getBrandAsString() {
 		return brand;
 	}
 
 	public CardType getType() {
+		return CardType.fromValue(type);
+	}
+
+	public String getTypeAsString() {
 		return type;
 	}
 

@@ -1,17 +1,21 @@
 package com.securionpay.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.securionpay.enums.FraudStatus;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FraudDetailsRequest {
+
 	private FraudStatus status;
+
+	@JsonIgnore
+	private final Map<String, Object> other = new HashMap<>();
 
 	public FraudStatus getStatus() {
 		return status;
@@ -21,9 +25,6 @@ public class FraudDetailsRequest {
 		this.status = status;
 		return this;
 	}
-
-	@JsonIgnore
-	private Map<String, Object> other = new HashMap<>();
 
 	@JsonAnyGetter
 	private Map<String, Object> getOtherMap() {

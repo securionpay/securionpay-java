@@ -1,14 +1,15 @@
 package com.securionpay.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.securionpay.response.Card;
+import com.securionpay.response.Customer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @JsonInclude(Include.NON_NULL)
 public class CardUpdateRequest {
@@ -30,7 +31,7 @@ public class CardUpdateRequest {
 	private String addressLine2;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public CardUpdateRequest() {
 	}
@@ -99,6 +100,10 @@ public class CardUpdateRequest {
 
 	public CardUpdateRequest card(Card card) {
 		return cardId(card.getId()).customerId(card.getCustomerId());
+	}
+
+	public CardUpdateRequest customer(Customer customer) {
+		return customerId(customer.getId());
 	}
 
 	public CardUpdateRequest expMonth(String expMonth) {

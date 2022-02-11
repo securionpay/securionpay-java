@@ -1,14 +1,14 @@
 package com.securionpay.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.securionpay.response.Plan;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @JsonInclude(Include.NON_NULL)
 public class PlanUpdateRequest {
@@ -20,11 +20,10 @@ public class PlanUpdateRequest {
 	private String currency;
 
 	private String name;
-	private String statementDescription;
 	private Map<String, String> metadata;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public PlanUpdateRequest() {
 	}
@@ -53,10 +52,6 @@ public class PlanUpdateRequest {
 		return name;
 	}
 
-	public String getStatementDescription() {
-		return statementDescription;
-	}
-
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
@@ -82,11 +77,6 @@ public class PlanUpdateRequest {
 	
 	public PlanUpdateRequest name(String name) {
 		this.name = name;
-		return this;
-	}
-
-	public PlanUpdateRequest statementDescription(String statementDescription) {
-		this.statementDescription = statementDescription;
 		return this;
 	}
 

@@ -16,12 +16,15 @@ public enum CardType {
 
 	private final String value;
 
-	private CardType(String value) {
+	CardType(String value) {
 		this.value = value;
 	}
 
 	@JsonCreator
 	public static CardType fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (CardType cardType : values()) {
 			if (cardType.value.equalsIgnoreCase(value)) {
 				return cardType;

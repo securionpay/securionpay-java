@@ -1,18 +1,5 @@
 package com.securionpay;
 
-import static java.lang.String.format;
-import static org.apache.commons.codec.binary.Base64.encodeBase64String;
-import static org.apache.commons.codec.binary.Hex.encodeHexString;
-
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
 import com.securionpay.connection.Connection;
 import com.securionpay.connection.HttpClientConnection;
 import com.securionpay.connection.Response;
@@ -20,24 +7,23 @@ import com.securionpay.enums.FileUploadPurpose;
 import com.securionpay.exception.SecurionPayException;
 import com.securionpay.exception.SignException;
 import com.securionpay.request.*;
-import com.securionpay.response.BlacklistRule;
-import com.securionpay.response.Card;
-import com.securionpay.response.Charge;
-import com.securionpay.response.Credit;
-import com.securionpay.response.CrossSaleOffer;
-import com.securionpay.response.Customer;
-import com.securionpay.response.DeleteResponse;
-import com.securionpay.response.Dispute;
-import com.securionpay.response.ErrorResponse;
-import com.securionpay.response.Event;
-import com.securionpay.response.FileUpload;
-import com.securionpay.response.ListResponse;
-import com.securionpay.response.Plan;
-import com.securionpay.response.Subscription;
-import com.securionpay.response.Token;
+import com.securionpay.response.*;
 import com.securionpay.util.Base64;
 import com.securionpay.util.ObjectSerializer;
 import com.securionpay.util.SecurionPayUtils;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.lang.String.format;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.commons.codec.binary.Base64.encodeBase64String;
+import static org.apache.commons.codec.binary.Hex.encodeHexString;
 
 public class SecurionPayGateway implements Closeable {
 
@@ -49,20 +35,20 @@ public class SecurionPayGateway implements Closeable {
 	private static final String CUSTOMERS_PATH = "/customers";
 	private static final String CARDS_PATH = "/customers/%s/cards";
 	private static final String PLANS_PATH = "/plans";
-	private static final String SUBSCRIPTIONS_PATH = "/customers/%s/subscriptions";
+	private static final String SUBSCRIPTIONS_PATH = "/subscriptions";
 	private static final String EVENTS_PATH = "/events";
 	private static final String BLACKLIST_RULE_PATH = "/blacklist";
 	private static final String CROSS_SALE_OFFER_PATH = "/cross-sale-offers";
 	private static final String CREDIT_PATH = "/credits";
 	private static final String FILES_PATH = "/files";
 	private static final String DISPUTES_PATH = "/disputes";
-	private static final String UTF_8 = "UTF-8";
+	private static final String FRAUD_WARNING_PATH = "/fraud-warnings";
 
 	private final ObjectSerializer objectSerializer = ObjectSerializer.INSTANCE;
 
 	private Connection connection;
 
-	private String privateKey;
+	private String secretKey;
 	private String endpoint = DEFAULT_ENDPOINT;
 	private String uploadsEndpoint = UPLOADS_ENDPOINT;
 
@@ -70,12 +56,12 @@ public class SecurionPayGateway implements Closeable {
 		this(null);
 	}
 
-	public SecurionPayGateway(String privateKey) {
-		this(privateKey, new HttpClientConnection());
+	public SecurionPayGateway(String secretKey) {
+		this(secretKey, new HttpClientConnection());
 	}
 
-	public SecurionPayGateway(String privateKey, Connection connection) {
-		this.privateKey = privateKey;
+	public SecurionPayGateway(String secretKey, Connection connection) {
+		this.secretKey = secretKey;
 		this.connection = connection;
 	}
 
@@ -156,29 +142,27 @@ public class SecurionPayGateway implements Closeable {
 	}
 
 	public Subscription createSubscription(SubscriptionRequest request) {
-		return post(format(SUBSCRIPTIONS_PATH, request.getCustomerId()), request, Subscription.class);
+		return post(SUBSCRIPTIONS_PATH, request, Subscription.class);
 	}
 
-	public Subscription retrieveSubscription(String customerId, String subscriptionId) {
-		return get(format(SUBSCRIPTIONS_PATH, customerId) + "/" + subscriptionId, Subscription.class);
+	public Subscription retrieveSubscription(String subscriptionId) {
+		return get(SUBSCRIPTIONS_PATH + "/" + subscriptionId, Subscription.class);
 	}
 
 	public Subscription updateSubscription(SubscriptionUpdateRequest request) {
-		return post(format(SUBSCRIPTIONS_PATH, request.getCustomerId()) + "/" + request.getSubscriptionId(), request,
-				Subscription.class);
+		return post(SUBSCRIPTIONS_PATH + "/" + request.getSubscriptionId(), request, Subscription.class);
 	}
 
 	public Subscription cancelSubscription(SubscriptionCancelRequest request) {
-		return delete(format(SUBSCRIPTIONS_PATH, request.getCustomerId()) + "/" + request.getSubscriptionId(), request,
-				Subscription.class);
+		return delete(SUBSCRIPTIONS_PATH + "/" + request.getSubscriptionId(), request, Subscription.class);
 	}
 
 	public ListResponse<Subscription> listSubscriptions(String customerId) {
-		return list(format(SUBSCRIPTIONS_PATH, customerId), Subscription.class);
+		return listSubscriptions(new SubscriptionListRequest().customerId(customerId));
 	}
 
 	public ListResponse<Subscription> listSubscriptions(SubscriptionListRequest request) {
-		return list(format(SUBSCRIPTIONS_PATH, request.getCustomerId()), request, Subscription.class);
+		return list(SUBSCRIPTIONS_PATH, request, Subscription.class);
 	}
 
 	public Plan createPlan(PlanRequest request) {
@@ -206,7 +190,7 @@ public class SecurionPayGateway implements Closeable {
 	}
 
 	public Event retrieveEvent(String eventId) {
-		return get(format(EVENTS_PATH + "/" + eventId), Event.class);
+		return get(EVENTS_PATH + "/" + eventId, Event.class);
 	}
 
 	public ListResponse<Event> listEvents() {
@@ -296,7 +280,7 @@ public class SecurionPayGateway implements Closeable {
 			String algorithm = "HmacSHA256";
 
 			Mac hmac = Mac.getInstance(algorithm);
-			hmac.init(new SecretKeySpec(privateKey.getBytes(UTF_8), algorithm));
+			hmac.init(new SecretKeySpec(secretKey.getBytes(UTF_8), algorithm));
 			String signature = encodeHexString(hmac.doFinal(data.getBytes(UTF_8)));
 
 			return encodeBase64String((signature + "|" + data).getBytes(UTF_8));
@@ -331,8 +315,8 @@ public class SecurionPayGateway implements Closeable {
 		return get(DISPUTES_PATH + "/" + id, Dispute.class);
 	}
 
-	public Dispute updateDispute(String id, DisputeUpdateRequest request) {
-		return post(DISPUTES_PATH + "/" + id, request, Dispute.class);
+	public Dispute updateDispute(DisputeUpdateRequest request) {
+		return post(DISPUTES_PATH + "/" + request.getDisputeId(), request, Dispute.class);
 	}
 
 	public Dispute closeDispute(String id) {
@@ -347,6 +331,40 @@ public class SecurionPayGateway implements Closeable {
 		return list(DISPUTES_PATH, request, Dispute.class);
 	}
 
+	public ListResponse<FraudWarning> listFraudWarnings() {
+		return list(FRAUD_WARNING_PATH, FraudWarning.class);
+	}
+
+	public ListResponse<FraudWarning> listFraudWarnings(FraudWarningListRequest request) {
+		return list(FRAUD_WARNING_PATH, request, FraudWarning.class);
+	}
+
+	public FraudWarning retrieveFraudWarning(String id) {
+		return get(FRAUD_WARNING_PATH + "/" + id, FraudWarning.class);
+	}
+
+	public Payout retrievePayout(String id) {
+		return get("/payouts/" + id, Payout.class);
+	}
+
+	public ListResponse<Payout> listPayouts() {
+		return list("/payouts", Payout.class);
+	}
+
+	public ListResponse<Payout> listPayouts(PayoutListRequest request) {
+		return list("/payouts", request, Payout.class);
+	}
+
+	public ListResponse<PayoutTransaction> listPayoutTransactions(String payoutId) {
+		PayoutTransactionListRequest request = new PayoutTransactionListRequest();
+		request.setPayout(payoutId);
+		return list("/payout-transactions", request, PayoutTransaction.class);
+	}
+
+	public ListResponse<PayoutTransaction> listPayoutTransactions(PayoutTransactionListRequest request) {
+		return list("/payout-transactions", request, PayoutTransaction.class);
+	}
+
 	@Override
 	public void close() throws IOException {
 		if (connection != null) {
@@ -358,8 +376,18 @@ public class SecurionPayGateway implements Closeable {
 		return get(endpoint, path, responseClass);
 	}
 
+	protected <T> T get(String path, Class<T> responseClass, Expand expand) {
+		return get(endpoint, path, responseClass, expand);
+	}
+
 	protected <T> T get(String endpoint, String path, Class<T> responseClass) {
-		Response response = connection.get(endpoint + path, buildHeaders());
+		return get(endpoint, path, responseClass, null);
+	}
+
+	protected <T> T get(String endpoint, String path, Class<T> responseClass, Expand expand) {
+		RetrieveRequest request = new RetrieveRequest().expand(expand);
+		String url = buildQueryString(endpoint + path, request);
+		Response response = connection.get(url, buildHeaders());
 		ensureSuccess(response);
 		return objectSerializer.deserialize(response.getBody(), responseClass);
 	}
@@ -403,12 +431,11 @@ public class SecurionPayGateway implements Closeable {
 		return objectSerializer.deserialize(response.getBody(), responseClass);
 	}
 
-	private Response ensureSuccess(Response response) {
+	private void ensureSuccess(Response response) {
 		if (response.getStatus() != 200) {
 			ErrorResponse error = objectSerializer.deserialize(response.getBody(), ErrorResponse.class);
 			throw new SecurionPayException(error);
 		}
-		return response;
 	}
 
 	private String buildQueryString(String url, Object request) {
@@ -422,7 +449,7 @@ public class SecurionPayGateway implements Closeable {
 	protected Map<String, String> buildHeaders() {
 		Map<String, String> headers = new HashMap<>();
 
-		headers.put("Authorization", "Basic " + Base64.encode((privateKey + ":").getBytes()));
+		headers.put("Authorization", "Basic " + Base64.encode((secretKey + ":").getBytes()));
 		headers.put("Content-Type", "application/json");
 		headers.put("User-Agent", "SecurionPay-Java/" + SecurionPayUtils.getBuildVersion()
 				+ " (Java/" + SecurionPayUtils.getJavaVersion() + ")");
@@ -430,8 +457,8 @@ public class SecurionPayGateway implements Closeable {
 		return headers;
 	}
 
-	public void setPrivateKey(String privateKey) {
-		this.privateKey = privateKey;
+	public void setSecretKey(String secretKey) {
+		this.secretKey = secretKey;
 	}
 
 	public void setConnection(Connection connection) {

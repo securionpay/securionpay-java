@@ -12,6 +12,9 @@ public enum BlacklistRuleType {
 	EMAIL("email"),
 	USER_AGENT("user_agent"),
 	ACCEPT_LANGUAGE("accept_language"),
+	CARD_COUNTRY("card_country"),
+	CARD_BIN("card_bin"),
+	CARD_ISSUER("card_issuer"),
 
 	/**
 	 * Used when received value can't be mapped to this enumeration.
@@ -20,12 +23,15 @@ public enum BlacklistRuleType {
 
 	private final String value;
 
-	private BlacklistRuleType(String value) {
+	BlacklistRuleType(String value) {
 		this.value = value;
 	}
 
 	@JsonCreator
 	public static BlacklistRuleType fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (BlacklistRuleType blacklistRuleType : values()) {
 			if (blacklistRuleType.value.equalsIgnoreCase(value)) {
 				return blacklistRuleType;

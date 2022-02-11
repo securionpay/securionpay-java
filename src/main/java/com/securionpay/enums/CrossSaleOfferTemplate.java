@@ -15,12 +15,15 @@ public enum CrossSaleOfferTemplate {
 
 	private final String value;
 
-	private CrossSaleOfferTemplate(String value) {
+	CrossSaleOfferTemplate(String value) {
 		this.value = value;
 	}
 
 	@JsonCreator
 	public static CrossSaleOfferTemplate fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (CrossSaleOfferTemplate template : values()) {
 			if (template.value.equalsIgnoreCase(value)) {
 				return template;

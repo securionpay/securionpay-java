@@ -6,6 +6,8 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
+
 public class DisputeEvidenceDetails {
 	private Long dueBy;
 	private boolean hasEvidence;
@@ -13,7 +15,7 @@ public class DisputeEvidenceDetails {
 	private Integer submissionCount;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public Long getDueBy() {
 		return dueBy;
@@ -29,6 +31,10 @@ public class DisputeEvidenceDetails {
 
 	public Integer getSubmissionCount() {
 		return submissionCount;
+	}
+
+	public String get(String name) {
+		return toStringNullSafe(other.get(name));
 	}
 
 	@JsonAnySetter

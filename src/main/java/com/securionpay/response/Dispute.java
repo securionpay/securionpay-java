@@ -19,8 +19,8 @@ public class Dispute {
 	private Integer amount;
 	private String currency;
 
-	private DisputeStatus status;
-	private DisputeReason reason;
+	private String status;
+	private String reason;
 
 	private Boolean acceptedAsLost;
 
@@ -30,7 +30,7 @@ public class Dispute {
 	private Charge charge;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getId() {
 		return id;
@@ -53,10 +53,18 @@ public class Dispute {
 	}
 
 	public DisputeStatus getStatus() {
+		return DisputeStatus.fromValue(status);
+	}
+
+	public String getStatusAsString() {
 		return status;
 	}
 
 	public DisputeReason getReason() {
+		return DisputeReason.fromValue(reason);
+	}
+
+	public String getReasonAsString() {
 		return reason;
 	}
 

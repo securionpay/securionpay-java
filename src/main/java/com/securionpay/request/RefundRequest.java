@@ -22,7 +22,7 @@ public class RefundRequest {
 	private RefundReason reason;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public RefundRequest() {
 	}

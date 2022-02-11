@@ -1,21 +1,22 @@
 package com.securionpay.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.securionpay.response.Customer;
+import com.securionpay.response.Plan;
 import com.securionpay.response.Subscription;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @JsonInclude(Include.NON_NULL)
 public class SubscriptionListRequest {
 
-	@JsonIgnore
 	private String customerId;
+	private String planId;
 
 	private Integer limit;
 	private String startingAfterId;
@@ -26,7 +27,7 @@ public class SubscriptionListRequest {
 	private Boolean deleted;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public SubscriptionListRequest() {
 	}
@@ -41,6 +42,10 @@ public class SubscriptionListRequest {
 
 	public String getCustomerId() {
 		return customerId;
+	}
+
+	public String getPlanId() {
+		return planId;
 	}
 
 	public Integer getLimit() {
@@ -74,6 +79,15 @@ public class SubscriptionListRequest {
 
 	public SubscriptionListRequest customer(Customer customer) {
 		return customerId(customer.getId());
+	}
+
+	public SubscriptionListRequest planId(String planId) {
+		this.planId = planId;
+		return this;
+	}
+
+	public SubscriptionListRequest plan(Plan plan) {
+		return planId(plan.getId());
 	}
 
 	public SubscriptionListRequest limit(Integer limit) {

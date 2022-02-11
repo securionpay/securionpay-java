@@ -25,7 +25,7 @@ public class ChargeRequest {
 	private Map<String, String> metadata;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public ChargeRequest() {
 	}
@@ -94,7 +94,7 @@ public class ChargeRequest {
 		return this;
 	}
 
-	public ChargeRequest customerId(Customer customer) {
+	public ChargeRequest customer(Customer customer) {
 		return customerId(customer.getId());
 	}
 

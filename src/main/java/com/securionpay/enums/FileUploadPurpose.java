@@ -18,6 +18,9 @@ public enum FileUploadPurpose {
 
 	@JsonCreator
 	public static FileUploadPurpose fromValue(String value) {
+		if (value == null) {
+			return null;
+		}
 		for (FileUploadPurpose purpose : values()) {
 			if (purpose.value.equalsIgnoreCase(value)) {
 				return purpose;

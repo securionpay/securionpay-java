@@ -12,7 +12,7 @@ public class ShippingRequest {
 	private AddressRequest address;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public ShippingRequest() {
 	}

@@ -22,7 +22,7 @@ public class CreditUpdateRequest {
 	private Map<String, String> metadata;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public CreditUpdateRequest() {
 	}
@@ -71,7 +71,7 @@ public class CreditUpdateRequest {
 		return this;
 	}
 
-	public CreditUpdateRequest customerId(Customer customer) {
+	public CreditUpdateRequest customer(Customer customer) {
 		return customerId(customer.getId());
 	}
 

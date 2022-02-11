@@ -1,6 +1,13 @@
 package com.securionpay.response;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.securionpay.enums.BlacklistRuleType;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
 public class BlacklistRule {
 
@@ -8,7 +15,7 @@ public class BlacklistRule {
 	private Long created;
 	private boolean deleted = false;
 
-	private BlacklistRuleType ruleType;
+	private String ruleType;
 
 	private String fingerprint;
 	private String ipAddress;
@@ -18,6 +25,12 @@ public class BlacklistRule {
 	private String email;
 	private String userAgent;
 	private String acceptLanguage;
+	private String cardCountry;
+	private String cardBin;
+	private String cardIssuer;
+
+	@JsonIgnore
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getId() {
 		return id;
@@ -32,6 +45,10 @@ public class BlacklistRule {
 	}
 
 	public BlacklistRuleType getRuleType() {
+		return BlacklistRuleType.fromValue(ruleType);
+	}
+
+	public String getRuleTypeAsString() {
 		return ruleType;
 	}
 
@@ -65,5 +82,26 @@ public class BlacklistRule {
 
 	public String getAcceptLanguage() {
 		return acceptLanguage;
+	}
+
+	public String getCardCountry() {
+		return cardCountry;
+	}
+	
+	public String getCardBin() {
+		return cardBin;
+	}
+
+	public String getCardIssuer() {
+		return cardIssuer;
+	}
+
+	public String get(String name) {
+		return toStringNullSafe(other.get(name));
+	}
+
+	@JsonAnySetter
+	private void set(String name, Object value) {
+		other.put(name, value);
 	}
 }

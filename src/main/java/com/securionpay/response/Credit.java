@@ -1,13 +1,13 @@
 package com.securionpay.response;
 
-import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.securionpay.enums.ErrorCode;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.securionpay.enums.ErrorCode;
+import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 
 public class Credit {
 	private String id;
@@ -21,12 +21,12 @@ public class Credit {
 
 	private Map<String, String> metadata;
 
-	private ErrorCode failureCode;
+	private String failureCode;
 	private String failureIssuerDeclineCode;
 	private String failureMessage;
 
 	@JsonIgnore
-	private Map<String, Object> other = new HashMap<String, Object>();
+	private final Map<String, Object> other = new HashMap<>();
 
 	public String getId() {
 		return id;
@@ -65,6 +65,10 @@ public class Credit {
 	}
 
 	public ErrorCode getFailureCode() {
+		return ErrorCode.fromValue(failureCode);
+	}
+
+	public String getFailureCodeAsString() {
 		return failureCode;
 	}
 
