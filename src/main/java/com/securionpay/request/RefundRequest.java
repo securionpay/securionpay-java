@@ -1,8 +1,5 @@
 package com.securionpay.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,10 +8,12 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.securionpay.enums.RefundReason;
 import com.securionpay.response.Charge;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @JsonInclude(Include.NON_NULL)
 public class RefundRequest {
-
-	@JsonIgnore
+    
 	private String chargeId;
 
 	private Integer amount;

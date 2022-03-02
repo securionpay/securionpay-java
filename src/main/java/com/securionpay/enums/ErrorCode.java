@@ -22,6 +22,8 @@ public enum ErrorCode {
 	EXPIRED_TOKEN("expired_token"),
 	LIMIT_EXCEEDED("limit_exceeded"),
 	AUTHENTICATION_REQUIRED("authentication_required"),
+	DO_NOT_TRY_AGAIN("do_not_try_again"),
+	CURRENCY_NOT_SUPPORTED("currency_not_supported"),
 
 	/**
 	 * Used when received value can't be mapped to this enumeration.

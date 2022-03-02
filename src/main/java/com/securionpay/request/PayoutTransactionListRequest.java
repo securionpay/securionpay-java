@@ -1,6 +1,12 @@
 package com.securionpay.request;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PayoutTransactionListRequest {
@@ -9,6 +15,14 @@ public class PayoutTransactionListRequest {
     private String source;
     private String startingAfterId;
     private String endingBeforeId;
+    private CreatedFilter created;
+
+    @JsonIgnore
+    private Map<String, Object> other = new HashMap<>();
+
+    public CreatedFilter getCreated() {
+        return created;
+    }
 
     public Integer getLimit() {
         return limit;
@@ -48,5 +62,19 @@ public class PayoutTransactionListRequest {
 
     public void setEndingBeforeId(String endingBeforeId) {
         this.endingBeforeId = endingBeforeId;
+    }
+
+    public void setCreated(CreatedFilter created) {
+        this.created = created;
+    }
+
+    @JsonAnyGetter
+    private Map<String, Object> getOtherMap() {
+        return other;
+    }
+
+    @JsonAnySetter
+    public void set(String name, Object value) {
+        other.put(name, value);
     }
 }
