@@ -87,7 +87,7 @@ public class BlacklistRule {
 	public String getCardCountry() {
 		return cardCountry;
 	}
-	
+
 	public String getCardBin() {
 		return cardBin;
 	}

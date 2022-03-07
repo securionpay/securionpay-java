@@ -23,7 +23,7 @@ public class ErrorResponse {
 	}
 
 	public String getTypeAsString() {
-		return error.getCodeAsString();
+		return error.getTypeAsString();
 	}
 
 	public ErrorCode getCode() {

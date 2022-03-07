@@ -34,7 +34,7 @@ public class Charge {
 	private List<WithCrossSale> withCrossSales;
 
 	private Dispute dispute;
-	
+
 	private Map<String, String> metadata;
 
 	private String failureCode;

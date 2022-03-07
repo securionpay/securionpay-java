@@ -30,6 +30,8 @@ public class CardUpdateRequest {
 	private String addressLine1;
 	private String addressLine2;
 
+	private boolean checkFastCredit = false;
+
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
 
@@ -86,6 +88,10 @@ public class CardUpdateRequest {
 
 	public String getAddressLine2() {
 		return addressLine2;
+	}
+
+	public boolean isCheckFastCredit() {
+		return checkFastCredit;
 	}
 
 	public CardUpdateRequest cardId(String cardId) {
@@ -148,6 +154,11 @@ public class CardUpdateRequest {
 
 	public CardUpdateRequest addressLine2(String addressLine2) {
 		this.addressLine2 = addressLine2;
+		return this;
+	}
+
+	public CardUpdateRequest checkFastCredit(boolean checkFastCredit) {
+		this.checkFastCredit = checkFastCredit;
 		return this;
 	}
 

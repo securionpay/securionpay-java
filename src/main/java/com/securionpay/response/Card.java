@@ -40,6 +40,8 @@ public class Card {
 	private FraudCheckData fraudCheckData;
 	private String issuer;
 
+	private FastCredit fastCredit;
+
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
 
@@ -133,6 +135,10 @@ public class Card {
 
 	public String getIssuer() {
 		return issuer;
+	}
+
+	public FastCredit getFastCredit() {
+		return fastCredit;
 	}
 
 	public String get(String name) {

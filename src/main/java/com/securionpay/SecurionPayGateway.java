@@ -43,6 +43,7 @@ public class SecurionPayGateway implements Closeable {
 	private static final String FILES_PATH = "/files";
 	private static final String DISPUTES_PATH = "/disputes";
 	private static final String FRAUD_WARNING_PATH = "/fraud-warnings";
+	private static final String REFUND_PATH = "/refunds";
 
 	private final ObjectSerializer objectSerializer = ObjectSerializer.INSTANCE;
 
@@ -81,6 +82,10 @@ public class SecurionPayGateway implements Closeable {
 		return post(CHARGES_PATH + "/" + request.getChargeId(), request, Charge.class);
 	}
 
+	/**
+	 * @deprecated For backward compatibility only. Use {@link SecurionPayGateway#createRefund(RefundRequest)}}.
+	 */
+	@Deprecated
 	public Charge refundCharge(RefundRequest request) {
 		return post(CHARGES_PATH + "/" + request.getChargeId() + "/refund", request, Charge.class);
 	}
@@ -341,6 +346,24 @@ public class SecurionPayGateway implements Closeable {
 
 	public FraudWarning retrieveFraudWarning(String id) {
 		return get(FRAUD_WARNING_PATH + "/" + id, FraudWarning.class);
+	}
+
+	public Refund retrieveRefund(String refundId) {
+		return get(REFUND_PATH + "/" + refundId, Refund.class);
+	}
+
+	public Refund createRefund(RefundRequest request) {
+		return post(REFUND_PATH, request, Refund.class);
+	}
+
+	public ListResponse<Refund> listRefunds(String chargeId) {
+		RefundListRequest request = new RefundListRequest();
+		request.chargeId(chargeId);
+		return listRefunds(request);
+	}
+
+	public ListResponse<Refund> listRefunds(RefundListRequest request) {
+		return list(REFUND_PATH, request, Refund.class);
 	}
 
 	public Payout retrievePayout(String id) {

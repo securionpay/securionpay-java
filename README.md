@@ -14,7 +14,7 @@ To do this you will need to add this configuration to your `pom.xml`:
 <dependency>
     <groupId>com.securionpay</groupId>
     <artifactId>securionpay-java</artifactId>
-    <version>2.4.0</version>
+    <version>2.7.0</version>
 </dependency>
 ```
 

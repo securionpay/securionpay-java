@@ -18,6 +18,7 @@ public class Credit {
 	private Card card;
 	private String customerId;
 	private ThreeDSecureInfo threeDSecureInfo;
+	private Boolean fast;
 
 	private Map<String, String> metadata;
 
@@ -58,6 +59,10 @@ public class Credit {
 
 	public ThreeDSecureInfo getThreeDSecureInfo() {
 		return threeDSecureInfo;
+	}
+
+	public Boolean getFast() {
+		return fast;
 	}
 
 	public Map<String, String> getMetadata() {
