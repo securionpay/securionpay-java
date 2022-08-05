@@ -24,6 +24,7 @@ public class SubscriptionUpdateRequest {
 	private Long trialEnd;
 	private ShippingRequest shipping;
 	private BillingRequest billing;
+	private String merchantAccountId;
 	private Map<String, String> metadata;
 
 	@JsonIgnore
@@ -70,6 +71,10 @@ public class SubscriptionUpdateRequest {
 
 	public BillingRequest getBilling() {
 		return billing;
+	}
+
+	public String getMerchantAccountId() {
+		return merchantAccountId;
 	}
 
 	public Map<String, String> getMetadata() {
@@ -121,6 +126,11 @@ public class SubscriptionUpdateRequest {
 
 	public SubscriptionUpdateRequest billing(BillingRequest billing) {
 		this.billing = billing;
+		return this;
+	}
+
+	public SubscriptionUpdateRequest merchantAccountId(String merchantAccountId) {
+		this.merchantAccountId = merchantAccountId;
 		return this;
 	}
 

@@ -13,7 +13,7 @@ public enum DisputeReason {
 	PRODUCT_UNACCEPTABLE("product_unacceptable"),
 	CREDIT_NOT_PROCESSED("credit_not_processed"),
 	GENERAL("general"),
-	
+
 	/**
 	 * Used when received value can't be mapped to this enumeration.
 	 */

@@ -22,6 +22,7 @@ public class ChargeRequest {
 	private ShippingRequest shipping;
 	private BillingRequest billing;
 	private ThreeDSecureRequest threeDSecure;
+	private String merchantAccountId;
 	private Map<String, String> metadata;
 
 	@JsonIgnore
@@ -68,6 +69,10 @@ public class ChargeRequest {
 
 	public ThreeDSecureRequest getThreeDSecure() {
 		return threeDSecure;
+	}
+
+	public String getMerchantAccountId() {
+		return merchantAccountId;
 	}
 
 	public Map<String, String> getMetadata() {
@@ -120,6 +125,11 @@ public class ChargeRequest {
 
 	public ChargeRequest threeDSecure(ThreeDSecureRequest threeDSecure) {
 		this.threeDSecure = threeDSecure;
+		return this;
+	}
+
+	public ChargeRequest merchantAccountId(String merchantAccountId) {
+		this.merchantAccountId = merchantAccountId;
 		return this;
 	}
 

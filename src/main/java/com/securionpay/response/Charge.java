@@ -35,6 +35,8 @@ public class Charge {
 
 	private Dispute dispute;
 
+	private String merchantAccountId;
+
 	private Map<String, String> metadata;
 
 	private String failureCode;
@@ -124,6 +126,10 @@ public class Charge {
 		return dispute;
 	}
 
+	public String getMerchantAccountId() {
+		return merchantAccountId;
+	}
+
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
@@ -145,6 +151,10 @@ public class Charge {
 	}
 
 	public String get(String name) {
+		if ("merchantAccountId".equals(name)) {
+			return merchantAccountId;
+		}
+
 		return toStringNullSafe(other.get(name));
 	}
 

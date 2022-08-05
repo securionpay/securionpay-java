@@ -370,6 +370,10 @@ public class SecurionPayGateway implements Closeable {
 		return get("/payouts/" + id, Payout.class);
 	}
 
+	public Payout createPayout() {
+		return post("/payouts", null, Payout.class);
+	}
+
 	public ListResponse<Payout> listPayouts() {
 		return list("/payouts", Payout.class);
 	}
@@ -380,7 +384,7 @@ public class SecurionPayGateway implements Closeable {
 
 	public ListResponse<PayoutTransaction> listPayoutTransactions(String payoutId) {
 		PayoutTransactionListRequest request = new PayoutTransactionListRequest();
-		request.setPayout(payoutId);
+		request.payout(payoutId);
 		return list("/payout-transactions", request, PayoutTransaction.class);
 	}
 
@@ -442,7 +446,6 @@ public class SecurionPayGateway implements Closeable {
 		ensureSuccess(response);
 		return objectSerializer.deserializeList(response.getBody(), elementClass);
 	}
-
 	protected <T> T delete(String path, Class<T> responseClass) {
 		return delete(path, null, responseClass);
 	}

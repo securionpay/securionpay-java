@@ -10,6 +10,7 @@ public enum SubscriptionStatus {
 	PAST_DUE("past_due"),
 	CANCELED("canceled"),
 	UNPAID("unpaid"),
+	INCOMPLETE("incomplete"),
 
 	/**
 	 * Used when received value can't be mapped to this enumeration.

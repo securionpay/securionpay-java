@@ -10,62 +10,80 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PayoutTransactionListRequest {
+
     private Integer limit;
-    private String payout;
-    private String source;
     private String startingAfterId;
     private String endingBeforeId;
+    private Boolean includeTotalCount;
     private CreatedFilter created;
+
+    private String payout;
+    private String source;
 
     @JsonIgnore
     private Map<String, Object> other = new HashMap<>();
 
-    public CreatedFilter getCreated() {
-        return created;
-    }
-
     public Integer getLimit() {
         return limit;
-    }
-
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
-
-    public String getPayout() {
-        return payout;
-    }
-
-    public void setPayout(String payout) {
-        this.payout = payout;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
     }
 
     public String getStartingAfterId() {
         return startingAfterId;
     }
 
-    public void setStartingAfterId(String startingAfterId) {
-        this.startingAfterId = startingAfterId;
-    }
-
     public String getEndingBeforeId() {
         return endingBeforeId;
     }
 
-    public void setEndingBeforeId(String endingBeforeId) {
-        this.endingBeforeId = endingBeforeId;
+    public Boolean getIncludeTotalCount() {
+        return includeTotalCount;
     }
 
-    public void setCreated(CreatedFilter created) {
+    public CreatedFilter getCreated() {
+        return created;
+    }
+
+    public String getPayout() {
+        return payout;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public PayoutTransactionListRequest limit(Integer limit) {
+        this.limit = limit;
+        return this;
+    }
+
+    public PayoutTransactionListRequest startingAfterId(String startingAfterId) {
+        this.startingAfterId = startingAfterId;
+        return this;
+    }
+
+    public PayoutTransactionListRequest endingBeforeId(String endingBeforeId) {
+        this.endingBeforeId = endingBeforeId;
+        return this;
+    }
+
+    public PayoutTransactionListRequest includeTotalCount(Boolean includeTotalCount) {
+        this.includeTotalCount = includeTotalCount;
+        return this;
+    }
+
+    public PayoutTransactionListRequest created(CreatedFilter created) {
         this.created = created;
+        return this;
+    }
+
+    public PayoutTransactionListRequest payout(String payout) {
+        this.payout = payout;
+        return this;
+    }
+
+    public PayoutTransactionListRequest source(String source) {
+        this.source = source;
+        return this;
     }
 
     @JsonAnyGetter
@@ -74,7 +92,8 @@ public class PayoutTransactionListRequest {
     }
 
     @JsonAnySetter
-    public void set(String name, Object value) {
+    public PayoutTransactionListRequest set(String name, Object value) {
         other.put(name, value);
+        return this;
     }
 }

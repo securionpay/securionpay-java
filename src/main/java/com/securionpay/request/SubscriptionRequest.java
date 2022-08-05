@@ -22,6 +22,7 @@ public class SubscriptionRequest {
 	private Long trialEnd;
 	private ShippingRequest shipping;
 	private BillingRequest billing;
+	private String merchantAccountId;
 	private Map<String, String> metadata = new HashMap<>();
 
 	@JsonIgnore
@@ -70,6 +71,10 @@ public class SubscriptionRequest {
 		return billing;
 	}
 
+	public String getMerchantAccountId() {
+		return merchantAccountId;
+	}
+
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
@@ -97,7 +102,7 @@ public class SubscriptionRequest {
 		return this;
 	}
 
-	public SubscriptionRequest trailEnd(Long trialEnd) {
+	public SubscriptionRequest trialEnd(Long trialEnd) {
 		this.trialEnd = trialEnd;
 		return this;
 	}
@@ -119,6 +124,11 @@ public class SubscriptionRequest {
 
 	public SubscriptionRequest billing(BillingRequest billing) {
 		this.billing = billing;
+		return this;
+	}
+
+	public SubscriptionRequest merchantAccountId(String merchantAccountId) {
+		this.merchantAccountId = merchantAccountId;
 		return this;
 	}
 

@@ -40,6 +40,8 @@ public class Card {
 	private FraudCheckData fraudCheckData;
 	private String issuer;
 
+	private String merchantAccountId;
+
 	private FastCredit fastCredit;
 
 	@JsonIgnore
@@ -137,11 +139,19 @@ public class Card {
 		return issuer;
 	}
 
+	public String getMerchantAccountId() {
+		return merchantAccountId;
+	}
+
 	public FastCredit getFastCredit() {
 		return fastCredit;
 	}
 
 	public String get(String name) {
+		if ("merchantAccountId".equals(name)) {
+			return merchantAccountId;
+		}
+
 		return toStringNullSafe(other.get(name));
 	}
 

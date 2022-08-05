@@ -19,6 +19,8 @@ public class Credit {
 	private String customerId;
 	private ThreeDSecureInfo threeDSecureInfo;
 	private Boolean fast;
+	private Receiver receiver;
+	private String merchantAccountId;
 
 	private Map<String, String> metadata;
 
@@ -65,6 +67,14 @@ public class Credit {
 		return fast;
 	}
 
+	public Receiver getReceiver() {
+		return receiver;
+	}
+
+	public String getMerchantAccountId() {
+		return merchantAccountId;
+	}
+
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
@@ -86,6 +96,10 @@ public class Credit {
 	}
 
 	public String get(String name) {
+		if ("merchantAccountId".equals(name)) {
+			return merchantAccountId;
+		}
+
 		return toStringNullSafe(other.get(name));
 	}
 

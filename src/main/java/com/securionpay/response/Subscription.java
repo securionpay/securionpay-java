@@ -33,6 +33,7 @@ public class Subscription {
 	private Billing billing;
 	private ThreeDSecureInfo threeDSecureInfo;
 	private Charge.FromCrossSale fromCrossSale;
+	private String merchantAccountId;
 	private Map<String, String> metadata;
 
 	@JsonIgnore
@@ -126,11 +127,19 @@ public class Subscription {
 		return fromCrossSale;
 	}
 
+	public String getMerchantAccountId() {
+		return merchantAccountId;
+	}
+
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
 
 	public String get(String name) {
+		if ("merchantAccountId".equals(name)) {
+			return merchantAccountId;
+		}
+
 		return toStringNullSafe(other.get(name));
 	}
 

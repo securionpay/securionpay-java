@@ -14,6 +14,7 @@ public class PayoutListRequest {
 	private Integer limit;
 	private String startingAfterId;
 	private String endingBeforeId;
+	private Boolean includeTotalCount;
 
 	private CreatedFilter created;
 
@@ -30,6 +31,10 @@ public class PayoutListRequest {
 
 	public String getEndingBeforeId() {
 		return endingBeforeId;
+	}
+
+	public Boolean getIncludeTotalCount() {
+		return includeTotalCount;
 	}
 
 	public CreatedFilter getCreated() {
@@ -57,6 +62,11 @@ public class PayoutListRequest {
 
 	public PayoutListRequest endingBefore(Event event) {
 		return endingBeforeId(event.getId());
+	}
+
+	public PayoutListRequest includeTotalCount(Boolean includeTotalCount) {
+		this.includeTotalCount = includeTotalCount;
+		return this;
 	}
 
 	public PayoutListRequest created(CreatedFilter created) {
