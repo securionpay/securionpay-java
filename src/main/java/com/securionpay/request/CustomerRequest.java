@@ -15,6 +15,7 @@ public class CustomerRequest {
 	private String email;
 	private String description;
 	private CardRequest card;
+	private PaymentMethodRequest paymentMethod;
 	private Map<String, String> metadata;
 
 	@JsonIgnore
@@ -39,6 +40,10 @@ public class CustomerRequest {
 		return card;
 	}
 
+	public PaymentMethodRequest getPaymentMethod() {
+		return paymentMethod;
+	}
+
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
@@ -55,6 +60,11 @@ public class CustomerRequest {
 
 	public CustomerRequest card(CardRequest card) {
 		this.card = card;
+		return this;
+	}
+
+	public CustomerRequest paymentMethod(PaymentMethodRequest paymentMethod) {
+		this.paymentMethod = paymentMethod;
 		return this;
 	}
 

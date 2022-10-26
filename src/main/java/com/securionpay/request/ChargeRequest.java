@@ -1,14 +1,14 @@
 package com.securionpay.request;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.securionpay.response.Customer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @JsonInclude(Include.NON_NULL)
 public class ChargeRequest {
@@ -18,6 +18,8 @@ public class ChargeRequest {
 	private String description;
 	private String customerId;
 	private CardRequest card;
+	private PaymentMethodRequest paymentMethod;
+	private ChargeFlowRequest flow;
 	private Boolean captured;
 	private ShippingRequest shipping;
 	private BillingRequest billing;
@@ -53,6 +55,14 @@ public class ChargeRequest {
 
 	public CardRequest getCard() {
 		return card;
+	}
+
+	public PaymentMethodRequest getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public ChargeFlowRequest getFlow() {
+		return flow;
 	}
 
 	public Boolean getCaptured() {
@@ -105,6 +115,16 @@ public class ChargeRequest {
 
 	public ChargeRequest card(CardRequest card) {
 		this.card = card;
+		return this;
+	}
+
+	public ChargeRequest paymentMethod(PaymentMethodRequest paymentMethod) {
+		this.paymentMethod = paymentMethod;
+		return this;
+	}
+
+	public ChargeRequest flow(ChargeFlowRequest flow) {
+		this.flow = flow;
 		return this;
 	}
 

@@ -2,6 +2,7 @@ package com.securionpay.response;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.securionpay.enums.ChargeStatus;
 import com.securionpay.enums.ErrorCode;
 
 import java.util.HashMap;
@@ -13,12 +14,16 @@ import static com.securionpay.util.SecurionPayUtils.toStringNullSafe;
 public class Charge {
 
 	private String id;
+	private String clientObjectId;
 	private Long created;
 	private Integer amount;
 	private Integer amountRefunded;
 	private String currency;
 	private String description;
+	private ChargeStatus status;
 	private Card card;
+	private PaymentMethod paymentMethod;
+	private ChargeFlow flow;
 	private String customerId;
 	private String subscriptionId;
 	private Boolean captured;
@@ -50,6 +55,10 @@ public class Charge {
 		return id;
 	}
 
+	public String getClientObjectId() {
+		return clientObjectId;
+	}
+
 	public Long getCreated() {
 		return created;
 	}
@@ -70,8 +79,20 @@ public class Charge {
 		return description;
 	}
 
+	public ChargeStatus getStatus() {
+		return status;
+	}
+
 	public Card getCard() {
 		return card;
+	}
+
+	public PaymentMethod getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public ChargeFlow getFlow() {
+		return flow;
 	}
 
 	public String getCustomerId() {
