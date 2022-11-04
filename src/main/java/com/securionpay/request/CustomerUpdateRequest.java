@@ -20,6 +20,7 @@ public class CustomerUpdateRequest {
 	private String email;
 	private String description;
 	private String defaultCardId;
+	private String defaultPaymentMethodId;
 	private CardRequest card;
 	private Map<String, String> metadata;
 
@@ -53,6 +54,10 @@ public class CustomerUpdateRequest {
 		return defaultCardId;
 	}
 
+	public String getDefaultPaymentMethodId() {
+		return defaultPaymentMethodId;
+	}
+
 	public CardRequest getCard() {
 		return card;
 	}
@@ -82,6 +87,11 @@ public class CustomerUpdateRequest {
 
 	public CustomerUpdateRequest defaultCardId(String defaultCardId) {
 		this.defaultCardId = defaultCardId;
+		return this;
+	}
+
+	public CustomerUpdateRequest defaultPaymentMethodId(String defaultPaymentMethodId) {
+		this.defaultPaymentMethodId = defaultPaymentMethodId;
 		return this;
 	}
 

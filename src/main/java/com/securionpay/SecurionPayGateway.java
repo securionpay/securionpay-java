@@ -34,6 +34,7 @@ public class SecurionPayGateway implements Closeable {
 	private static final String TOKENS_PATH = "/tokens";
 	private static final String CUSTOMERS_PATH = "/customers";
 	private static final String CARDS_PATH = "/customers/%s/cards";
+	private static final String PAYMENT_METHOD_PATH = "/payment-methods";
 	private static final String PLANS_PATH = "/plans";
 	private static final String SUBSCRIPTIONS_PATH = "/subscriptions";
 	private static final String EVENTS_PATH = "/events";
@@ -144,6 +145,22 @@ public class SecurionPayGateway implements Closeable {
 
 	public ListResponse<Card> listCards(CardListRequest listCards) {
 		return list(format(CARDS_PATH, listCards.getCustomerId()), listCards, Card.class);
+	}
+
+	public PaymentMethod createPaymentMethod(PaymentMethodRequest request) {
+		return post(PAYMENT_METHOD_PATH, request, PaymentMethod.class);
+	}
+
+	public PaymentMethod retrievePaymentMethod(String paymentMethodId) {
+		return get(PAYMENT_METHOD_PATH + "/" + paymentMethodId, PaymentMethod.class);
+	}
+
+	public ListResponse<PaymentMethod> listPaymentMethods(PaymentMethodListRequest listRequest) {
+		return list(PAYMENT_METHOD_PATH, listRequest, PaymentMethod.class);
+	}
+
+	public DeleteResponse deletePaymentMethod(String paymentMethodId) {
+		return delete(PAYMENT_METHOD_PATH + "/" + paymentMethodId, DeleteResponse.class);
 	}
 
 	public Subscription createSubscription(SubscriptionRequest request) {

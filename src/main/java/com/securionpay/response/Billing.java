@@ -12,6 +12,7 @@ public class Billing {
 	private String name;
 	private Address address;
 	private String vat;
+	private String email;
 
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
@@ -26,6 +27,10 @@ public class Billing {
 
 	public String getVat() {
 		return vat;
+	}
+
+	public String getEmail() {
+		return email;
 	}
 
 	public String get(String name) {
