@@ -1,3 +1,8 @@
+Deprecation
+===================================
+
+This library is deprecated. Please use [Shift4 Java Library](https://github.com/shift4developer/shift4-java).
+
 # SecurionPay JAVA Library
 
 If you don't already have SecurionPay account you can create it [here](https://securionpay.com/signup). 
